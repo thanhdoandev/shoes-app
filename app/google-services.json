@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "109124936684",
+    "project_id": "shose-shop-8ba16",
+    "storage_bucket": "shose-shop-8ba16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109124936684:android:09faba08ed7498352ad6c9",
+        "android_client_info": {
+          "package_name": "com.example.compose_ui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0lMtygxZCSOwnPU_V-_552zAzCh744-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

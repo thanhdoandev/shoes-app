@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">compose_ui</string>
+
+    <!--Tabs name-->
+    <string name="homeNameTab">Home</string>
+    <string name="favoriteNameTab">Favorites</string>
+    <string name="profileNameTab">Profile</string>
+    <string name="orderNameTab">Favorites</string>
+    <string name="notificationNameTab">Notification</string>
+
+    <!--Intro-->
+    <string name="introButtonLabel">Get Started</string>
+
+    <!--AUTH-->
+    <string name="emailLabel">Email Address</string>
+    <string name="passwordLabel">Password</string>
+    <string name="loginTitle">Hello Again!</string>
+    <string name="loginDesc">Fill your details or continue with social media</string>
+    <string name="loginRecoveryPassword">Recovery Password</string>
+    <string name="loginButton">Login</string>
+    <string name="loginWithGoogleButton">Login with Google</string>
+    <string name="loginNewUser">New User?</string>
+    <string name="loginCreateAccount">Create Account</string>
+
+    <string name="registerTitle">Register Account</string>
+    <string name="registerAlreadyAccount">Already Have Account?</string>
+    <string name="registerLogin">Log In</string>
+    <string name="registerYourName">Your Name *</string>
+
+    <!--Home-->
+    <string name="homeExplore">Explore</string>
+    <string name="homeCategories">Select Category</string>
+    <string name="homeSeeAll">See All</string>
+    <string name="homeAllShoes">All Shoes</string>
+    <string name="homeOutdoor">Outdoor</string>
+    <string name="homeTennis">Tennis</string>
+    <string name="homePopularShoes">Popular Shoes</string>
+    <string name="homeNewArrivals">New Arrivals</string>
+
+    <string name="placeholderField">Please enter your %s</string>
+
+    <!--Commons-->
+    <string name="nextLabelButton">Next</string>
+</resources>
