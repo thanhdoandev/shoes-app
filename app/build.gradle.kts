@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services") version "4.4.1" apply true
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -10,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.compose_ui"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -67,24 +70,28 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
-    val nav_version = "2.7.7"
-
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.compose.material:material:1.6.5")
-    implementation("androidx.compose.material:material-icons-extended:1.6.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose: 2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.compose.material:material:1.6.6")
+    implementation("androidx.compose.material:material-icons-extended:1.6.6")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.17.0")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-//    implementation("androidx.hilt:hilt-work:1.0.0")
-//    // When using Kotlin.
-//    implementation("androidx.hilt:hilt-compiler:1.0.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
 
-    /*Firebase store*/
+//    /*Firebase store*/
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-database:20.3.1")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth")
+}
+
+
+kapt {
+    correctErrorTypes = true
 }

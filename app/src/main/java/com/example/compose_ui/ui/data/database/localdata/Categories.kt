@@ -5,22 +5,27 @@ import com.example.compose_ui.ui.data.vo.Category
 val Categories = mutableListOf(
     Category(
         id = "0",
-        name = "All"
+        name = "All",
+        description = ""
     ),
     Category(
         id = "1",
-        name = "Outdoor"
+        name = "Outdoor",
+        description = ""
     ),
     Category(
         id = "2",
-        name = "Tennis"
+        name = "Tennis",
+        description = ""
     ),
     Category(
         id = "3",
-        name = "Football"
+        name = "Football",
+        description = ""
     ),
     Category(
         id = "4",
-        name = "Volleyball"
+        name = "Volleyball",
+        description = ""
     )
 )

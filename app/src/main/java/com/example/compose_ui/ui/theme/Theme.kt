@@ -9,7 +9,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -38,11 +40,19 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+data class AppCustomColors(
+    val bgColor: Color = Color.Unspecified,
+    val bgHeader: Color = Color.Unspecified,
+)
+
+val LocalAppCustomColors = staticCompositionLocalOf {
+    AppCustomColors()
+}
+
 @Composable
 fun Compose_uiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
-    isLoading: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -58,14 +68,27 @@ fun Compose_uiTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = if (isLoading) bgLoadingColor.toArgb() else Color.White.toArgb()
+            window.statusBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
+    val appCustomColor = if (darkTheme) {
+        AppCustomColors(bgColor = colorScheme.background, bgHeader = colorScheme.background)
+    } else {
+        AppCustomColors(bgColor = bgPage, bgHeader = Color.White)
+    }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(LocalAppCustomColors provides appCustomColor) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
+}
+
+object CustomComposeTheme {
+    val appCustomColors: AppCustomColors
+        @Composable
+        get() = LocalAppCustomColors.current
 }

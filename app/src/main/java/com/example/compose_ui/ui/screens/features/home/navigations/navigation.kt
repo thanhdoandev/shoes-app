@@ -31,7 +31,6 @@ fun NavGraphBuilder.homeGraph(
                     else -> listOf()
                 }
             ) {
-//                onBottomTabState(navController.getCurrentRoute() == getScreenName(EScreenName.HOME))
                 when (screen.route) {
                     EScreenName.HOME -> {
                         Home(

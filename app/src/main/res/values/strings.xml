@@ -26,6 +26,7 @@
     <string name="registerAlreadyAccount">Already Have Account?</string>
     <string name="registerLogin">Log In</string>
     <string name="registerYourName">Your Name *</string>
+    <string name="registerButton">Register</string>
 
     <!--Home-->
     <string name="homeExplore">Explore</string>
@@ -38,6 +39,11 @@
     <string name="homeNewArrivals">New Arrivals</string>
 
     <string name="placeholderField">Please enter your %s</string>
+
+    <!--Detail-->
+    <string name="detail">Detail</string>
+    <string name="productRelated">Related products</string>
+    <string name="addToCart">Add to Cart</string>
 
     <!--Commons-->
     <string name="nextLabelButton">Next</string>

@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.screens.auth.navigations
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -8,7 +9,9 @@ import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.navigations.pushToScreen
 import com.example.compose_ui.ui.navigations.startNewDestination
 import com.example.compose_ui.ui.screens.auth.login.Login
+import com.example.compose_ui.ui.screens.auth.login.LoginViewModel
 import com.example.compose_ui.ui.screens.auth.register.Register
+import com.example.compose_ui.ui.screens.auth.register.RegisterViewModels
 import com.example.compose_ui.ui.screens.features.home.Home
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
@@ -21,14 +24,18 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
                 when (screen.route) {
                     EScreenName.LOGIN -> {
                         Login(
-                            onRegister = { navController.pushToScreen(EScreenName.REGISTER) }
-                        ) {
-                            navController.startNewDestination(EScreenName.HOME_ROUTE)
-                        }
+                            viewModel = hiltViewModel<LoginViewModel>(),
+                            onRegister = { navController.pushToScreen(EScreenName.REGISTER) },
+                            onOpenHome = { navController.startNewDestination(EScreenName.HOME_ROUTE) }
+                        )
                     }
 
                     EScreenName.REGISTER -> {
-                        Register(onBack = { navController.popBackStack() })
+                        Register(
+                            viewModel = hiltViewModel<RegisterViewModels>(),
+                            onBack = { navController.popBackStack() },
+                            onOpenHome = { navController.startNewDestination(EScreenName.HOME_ROUTE) }
+                        )
                     }
 
                     EScreenName.HOME -> {
