@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
@@ -19,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
+import com.example.compose_ui.ui.theme.secondaryText
 import java.util.Locale
 
 @Composable
@@ -46,9 +50,16 @@ fun JPInput(
     isPassword: Boolean = false,
     iconInput: ImageVector? = null,
     mTop: Dp = 16.dp,
+    borderColor: Color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled),
+    focusBorderColor: Color = primaryColor,
+    contentColor: Color = primaryText,
+    unFocusLabelColor: Color = secondaryText,
     onValueChange: (text: String) -> Unit
 ) {
     var isVisiblePassword by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var isFocus by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -61,20 +72,23 @@ fun JPInput(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
-                .padding(0.dp),
+                .padding(0.dp)
+                .onFocusChanged {
+                    isFocus = !isFocus
+                },
             value = value,
             maxLines = maxLines,
             placeholder = { Text(text = hint) },
             label = {
                 Text(
                     text = label,
-                    color = primaryText,
+                    color = if (isFocus && value.isBlank()) unFocusLabelColor else contentColor,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )
             },
             textStyle = TextStyle(
-                color = primaryText,
+                color = contentColor,
                 fontWeight = FontWeight.Medium,
                 fontSize = 15.sp
             ),
@@ -100,11 +114,14 @@ fun JPInput(
                 }
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = primaryColor,
-                unfocusedBorderColor = primaryText,
-                textColor = primaryText,
-                disabledLabelColor = primaryText,
-                cursorColor = primaryText
+                focusedBorderColor = focusBorderColor,
+                unfocusedBorderColor = borderColor,
+                textColor = contentColor,
+                disabledLabelColor = contentColor,
+                placeholderColor = contentColor,
+                cursorColor = contentColor,
+                focusedLabelColor = contentColor,
+                errorBorderColor = Color.Red
             ),
             isError = isError,
             onValueChange = {

@@ -1,24 +1,25 @@
 package com.example.compose_ui.ui.components.bases
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -27,8 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.compose_ui.ui.components.commons.apps.HeaderPage
+import com.example.compose_ui.ui.components.cores.JPCard
+import com.example.compose_ui.ui.components.cores.JPColumn
+import com.example.compose_ui.ui.components.cores.JPText
+import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgLoadingColor
-import com.example.compose_ui.ui.theme.bgPage
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.secondaryText
 
@@ -39,32 +44,19 @@ fun ContainerPage(
     onBackScreen: () -> Unit = {},
     iconAction: ImageVector? = null,
     onActionClick: () -> Unit = {},
-    bgColor: Color = bgPage,
-    bgColorHeader: Color = Color.White,
-    isScrollPage: Boolean = false,
-    isVisibleHeaderLine: Boolean = true,
+    bgColor: Color? = null,
     isBack: Boolean = true,
-    isLoading: Boolean = false,
+    uiState: UIState = UIState(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val modifier: Modifier = Modifier
-        .fillMaxSize()
-        .background(bgColor)
 
-    modifier.run {
-        if (isScrollPage) {
-            verticalScroll(rememberScrollState(), true)
-        }
-        if (isLoading) {
-            alpha(0.9f)
-            composed {
-                clickable(
-                    enabled = false,
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() },
-                    onClick = { },
-                )
-            }
+    var isVisibleDialogError by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(uiState) {
+        if (uiState.copy().message.isNotEmpty()) {
+            isVisibleDialogError = true
         }
     }
 
@@ -76,8 +68,6 @@ fun ContainerPage(
                 onBackScreen = { onBackScreen() },
                 iconAction = iconAction,
                 onActionClick = { onActionClick() },
-                isVisibleHeaderLine = isVisibleHeaderLine,
-                bgColor = if (isLoading) bgLoadingColor else bgColorHeader,
                 isBack = isBack,
                 modifier = Modifier.constrainAs(header) {
                     top.linkTo(parent.top)
@@ -87,17 +77,49 @@ fun ContainerPage(
             )
         }
         Column(
-            modifier
-                .fillMaxSize()
-                .background(if (isLoading) bgLoadingColor else bgColor)
-                .constrainAs(container)
-                {
+            Modifier
+                .alpha(if (uiState.isLoading) 0.5f else 1.0f)
+                .background(
+                    if (uiState.isLoading) bgLoadingColor else bgColor
+                        ?: CustomComposeTheme.appCustomColors.bgColor
+                )
+                .constrainAs(container) {
                     top.linkTo(header.bottom)
                     start.linkTo(parent.start)
                 }) {
             content()
         }
-        if (isLoading) {
+        if (isVisibleDialogError) {
+            Dialog(onDismissRequest = {
+                uiState.apply {
+                    isLoading = false
+                    message = ""
+                }
+                isVisibleDialogError = false
+            }) {
+                JPCard(
+                    roundTopStart = 16.dp,
+                    roundTopEnd = 16.dp,
+                    roundBottomStart = 16.dp,
+                    roundBottomEnd = 16.dp,
+                    bgColor = Color.White
+                ) {
+                    JPColumn(Modifier.padding(24.dp, 32.dp)) {
+                        JPText(
+                            text = "Error Message!",
+                            color = Color.Black,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        JPText(
+                            text = uiState.message,
+                            color = Color.Black,
+                            mTop = 8.dp
+                        )
+                    }
+                }
+            }
+        }
+        if (uiState.isLoading) {
             Dialog(onDismissRequest = { }) {
                 Box(Modifier
                     .constrainAs(loading) {

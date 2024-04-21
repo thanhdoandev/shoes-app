@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.components.bases
+package com.example.compose_ui.ui.components.commons.apps
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,11 +10,11 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,7 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.theme.primaryColor
+import com.example.compose_ui.ui.theme.CustomComposeTheme
+import com.example.compose_ui.ui.theme.none
+import com.example.compose_ui.ui.theme.size_20
+import com.example.compose_ui.ui.theme.size_6
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,35 +35,30 @@ fun HeaderPage(
     modifier: Modifier = Modifier,
     onBackScreen: () -> Unit,
     iconAction: ImageVector? = null,
-    isVisibleHeaderLine: Boolean = true,
-    bgColor: Color = Color.White,
     isBack: Boolean = true,
     onActionClick: () -> Unit? = {},
 ) {
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = size_6
         ),
-        shape = RoundedCornerShape(0.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = primaryColor,
-        )
+        shape = RoundedCornerShape(none, none, size_20, size_20),
     ) {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
         CenterAlignedTopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = bgColor,
-                titleContentColor = Color.White,
+                containerColor = CustomComposeTheme.appCustomColors.bgHeader,
             ),
             title = {
                 JPText(
                     title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    size = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
                 )
             },
             navigationIcon = {
@@ -68,7 +66,6 @@ fun HeaderPage(
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "",
-                        tint = Color.Black,
                         modifier = Modifier.size(32.dp)
                     )
                 }

@@ -3,6 +3,10 @@
 package com.example.compose_ui.ui.navigations
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.BottomNavigation
@@ -14,6 +18,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -63,48 +68,55 @@ private val bottomTabItems = listOf(
 )
 
 @Composable
-fun AppBottomTabs(navController: NavHostController) {
-    BottomNavigation(backgroundColor = Color.White) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-        bottomTabItems.forEach { screen ->
-            BottomNavigationItem(
-                alwaysShowLabel = true,
-                selectedContentColor = primaryColor,
-                unselectedContentColor = Color.Gray,
-                icon = {
-                    Icon(
-                        screen.icon,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(36.dp)
-                            .width(30.dp)
-                    )
-                },
-                selected = currentDestination?.hierarchy?.any {
-                    it.route == getScreenName(screen.route)
-                } == true,
-                onClick = {
-                    val route = when (navController.getCurrentRoute()) {
-                        getScreenName(EScreenName.HOME) -> EScreenName.HOME_ROUTE
-                        getScreenName(EScreenName.FAVORITES) -> EScreenName.FAVORITES_ROUTE
-                        getScreenName(EScreenName.ORDERS) -> EScreenName.ORDERS_ROUTE
-                        getScreenName(EScreenName.NOTIFICATIONS) -> EScreenName.NOTIFICATIONS_ROUTE
-                        getScreenName(EScreenName.PROFILE) -> EScreenName.PROFILE_ROUTE
-                        else -> {}
-                    }
-                    if (route != screen.route) {
-                        navController.navigate(getScreenName(screen.route)) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
+fun AppBottomTabs(navController: NavHostController, isVisible: Boolean) {
 
-                            launchSingleTop = true
-                            restoreState = true
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it })
+    ) {
+        BottomNavigation(backgroundColor = MaterialTheme.colorScheme.background) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+            bottomTabItems.forEach { screen ->
+                BottomNavigationItem(
+                    alwaysShowLabel = true,
+                    selectedContentColor = primaryColor,
+                    unselectedContentColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
+                    icon = {
+                        Icon(
+                            screen.icon,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .height(36.dp)
+                                .width(30.dp)
+                        )
+                    },
+                    selected = currentDestination?.hierarchy?.any {
+                        it.route == getScreenName(screen.route)
+                    } == true,
+                    onClick = {
+                        val route = when (navBackStackEntry.getCurrentRoute()) {
+                            getScreenName(EScreenName.HOME) -> EScreenName.HOME_ROUTE
+                            getScreenName(EScreenName.FAVORITES) -> EScreenName.FAVORITES_ROUTE
+                            getScreenName(EScreenName.ORDERS) -> EScreenName.ORDERS_ROUTE
+                            getScreenName(EScreenName.NOTIFICATIONS) -> EScreenName.NOTIFICATIONS_ROUTE
+                            getScreenName(EScreenName.PROFILE) -> EScreenName.PROFILE_ROUTE
+                            else -> {}
+                        }
+                        if (route != screen.route) {
+                            navController.navigate(getScreenName(screen.route)) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }

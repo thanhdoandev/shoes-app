@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,11 +23,11 @@ fun JPTextButton(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = primaryText,
-    size: TextUnit = 13.sp,
+    size: TextUnit = 16.sp,
     family: FontFamily? = FontFamily.Default,
     isCenter: Boolean = false,
-    textAlign: TextAlign? = null,
-    fontWeight: FontWeight? = null,
+    textAlign: TextAlign = TextAlign.End,
+    fontWeight: FontWeight? = FontWeight.Medium,
     lineHeight: TextUnit = 24.sp,
     mTop: Dp = 0.dp,
     mBottom: Dp = 0.dp,
@@ -39,14 +40,17 @@ fun JPTextButton(
             modifier.clickable {
                 onClick()
             },
-            color,
-            size,
-            family,
-            isCenter,
-            textAlign,
-            fontWeight,
-            lineHeight,
-        )
+            style = typography.titleMedium.copy(
+                color = color,
+                fontSize = size,
+                fontFamily = family,
+                textAlign = textAlign,
+                lineHeight = lineHeight
+            ),
+            isCenter = isCenter,
+            fontWeight = fontWeight,
+
+            )
     }
     Spacer(modifier = Modifier.height(mBottom))
 }

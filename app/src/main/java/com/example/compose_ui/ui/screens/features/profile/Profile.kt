@@ -13,14 +13,14 @@ fun Profile(
     viewModel: ProfileViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     onLogout: () -> Unit = {}
 ) {
-    val isLoading by viewModel.isLoading.collectAsState()
+    val isLoading by viewModel.uiState.collectAsState()
     val isLogoutSuccess by viewModel.isLogoutSuccess.collectAsState()
 
     LaunchedEffect(isLogoutSuccess) {
         if (isLogoutSuccess) onLogout()
     }
 
-    ContainerPage(isBack = false, title = "Profile", isLoading = isLoading) {
+    ContainerPage(isBack = false, title = "Profile") {
         JPButton(label = "Logout") {
             viewModel.onLogout()
         }

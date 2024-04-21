@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.navigations
 
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
@@ -20,4 +21,4 @@ fun NavController.startNewDestination(route: EScreenName) {
     }
 }
 
-fun NavController.getCurrentRoute(): String? = currentBackStackEntry?.destination?.route
+fun NavBackStackEntry?.getCurrentRoute(): String? = this?.destination?.route
