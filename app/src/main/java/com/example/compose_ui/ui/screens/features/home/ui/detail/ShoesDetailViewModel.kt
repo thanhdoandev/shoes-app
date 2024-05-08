@@ -14,10 +14,29 @@ class ShoesDetailViewModel @Inject constructor(savedStateHandle: SavedStateHandl
     BaseViewModel(savedStateHandle) {
     private val _shoes: MutableStateFlow<Product?> = MutableStateFlow(null)
     val shoes: StateFlow<Product?> = _shoes.asStateFlow()
+    private var _similarShoes: MutableStateFlow<MutableList<Product>> =
+        MutableStateFlow(mutableListOf())
+    val similarShoes: StateFlow<MutableList<Product>> = _similarShoes.asStateFlow()
+    private val _isLoadingSimilar = MutableStateFlow(false)
+    val isLoadingSimilar = _isLoadingSimilar.asStateFlow()
 
-    internal fun getShoesDetail(id: String) {
+    init {
+        savedStateHandle.get<String>("shoesId")?.let(::getShoesDetail)
+    }
+
+    fun getShoesDetail(id: String) {
         getProduct(id) {
             _shoes.value = it
+            getSimilarShoes(it)
+        }
+    }
+
+    private fun getSimilarShoes(product: Product) {
+        _isLoadingSimilar.value = true
+        getSimilarProducts(product.type) {
+            it.remove(product)
+            _similarShoes.value = it
+            _isLoadingSimilar.value = false
         }
     }
 

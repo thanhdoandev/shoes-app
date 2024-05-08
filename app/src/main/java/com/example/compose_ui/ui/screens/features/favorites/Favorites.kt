@@ -13,8 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.cores.JPImage
-import com.example.compose_ui.ui.theme.bgLoadingColor
 import com.example.compose_ui.ui.theme.bgPage
 
 @Composable
@@ -26,10 +24,7 @@ fun Favorites(
     LaunchedEffect(Unit) {
         viewModel.getFavorites()
     }
-    ContainerPage(
-        isBack = false,
-        title = "Favorites"
-    ) {
+    ContainerPage(title = "Favorites", isBack = false) {
         LinearProgressIndicator(
             color = bgPage,
             trackColor = Color.White,
@@ -39,24 +34,6 @@ fun Favorites(
 
         )
         Spacer(modifier = Modifier.height(16.dp))
-        JPImage(url = "https://www.courir.com/on/demandware.static/-/Sites-master-catalog-courir/default/dw9a359d7b/images/hi-res/001501168_101.png")
-
-//        LazyVerticalGrid(
-//            modifier = Modifier.fillMaxSize(),
-//            columns = GridCells.Fixed(2),
-//            verticalArrangement = Arrangement.spacedBy(16.dp),
-//            contentPadding = PaddingValues(0.dp),
-//            horizontalArrangement = Arrangement.spacedBy(0.dp)
-//        ) {
-//            items(favoriteList) { product ->
-//                ProductCard(
-//                    product = product,
-//                    onViewDetail = { onViewDetail(product.id) },
-//                    onAddToCart = {},
-//                    isFromFavorite = true
-//                )
-//            }
-//        }
     }
 }
 

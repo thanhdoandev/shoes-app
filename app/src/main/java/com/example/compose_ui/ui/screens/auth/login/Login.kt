@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.components.bases.UIState
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -28,7 +28,14 @@ import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
 import com.example.compose_ui.ui.data.enums.EFieldType
 import com.example.compose_ui.ui.theme.primaryText
+import com.example.compose_ui.ui.theme.size_16
+import com.example.compose_ui.ui.theme.size_28
+import com.example.compose_ui.ui.theme.size_4
+import com.example.compose_ui.ui.theme.size_40
+import com.example.compose_ui.ui.theme.size_48
+import com.example.compose_ui.ui.theme.size_50
 import com.example.compose_ui.ui.theme.size_6
+import com.example.compose_ui.ui.theme.size_80
 
 
 @Composable
@@ -37,7 +44,6 @@ fun Login(
     onRegister: () -> Unit = {},
     onOpenHome: () -> Unit = {}
 ) {
-    val loginData by viewModel.loginData.collectAsState()
     val isLoginSuccess by viewModel.isLoginSuccess.collectAsState()
 
     LaunchedEffect(isLoginSuccess) {
@@ -46,46 +52,66 @@ fun Login(
         }
     }
 
-    ContainerPage(
-        isVisibleHeader = false,
-        uiState = viewModel.uiState.collectAsState().value
-    ) {
-        JPSpacer(h = 80.dp)
+    viewModel.run {
+        LoginScreen(
+            uiState = uiState.collectAsState().value,
+            uiData = loginData.collectAsState().value,
+            onUpdateData = { field, data ->
+                updateLogin(field, data)
+            },
+            onLogin = {
+                if (it) else login()
+            },
+            onRegister = onRegister
+        )
+    }
+}
+
+@Composable
+private fun LoginScreen(
+    uiState: UIState,
+    uiData: LoginData,
+    onUpdateData: (field: EFieldType, data: String) -> Unit = { _, _ -> },
+    onLogin: (isSocial: Boolean) -> Unit = {},
+    onRegister: () -> Unit = {}
+) {
+    ContainerPage(uiState = uiState) {
+        JPSpacer(h = size_80)
         JPCard(
-            roundTopStart = 28.dp,
-            roundTopEnd = 28.dp,
+            roundTopStart = size_28,
+            roundTopEnd = size_28,
             isMaxSize = true
         ) {
             JPColumn(Modifier.verticalScroll(rememberScrollState())) {
                 JPText(
                     modifier = Modifier.fillMaxWidth(),
-                    mTop = 40.dp,
+                    mTop = size_40,
                     text = stringResource(id = R.string.loginTitle),
                     isCenter = true,
                     style = MaterialTheme.typography.titleLarge
                 )
                 JPText(
-                    mTop = 4.dp,
+                    mTop = size_40,
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.loginDesc),
                     isCenter = true
                 )
                 JPInput(
-                    value = loginData.email,
+                    value = uiData.email,
                     onValueChange = {
-                        viewModel.updateLogin(EFieldType.EMAIL, it)
+                        onUpdateData(EFieldType.EMAIL, it)
                     },
                     label = stringResource(id = R.string.emailLabel),
-                    mTop = 40.dp,
+                    mTop = size_40,
                     focusBorderColor = Color.White,
                     contentColor = Color.White,
                     unFocusLabelColor = primaryText
                 )
                 JPInput(
-                    value = loginData.password,
+                    value = uiData.password,
                     contentColor = Color.White,
                     onValueChange = {
-                        viewModel.updateLogin(EFieldType.PASSWORD, it)
+                        onUpdateData(EFieldType.PASSWORD, it)
                     },
                     label = stringResource(id = R.string.passwordLabel),
                     focusBorderColor = Color.White,
@@ -93,7 +119,7 @@ fun Login(
                     isPassword = true
                 )
                 JPTextButton(
-                    mTop = 4.dp,
+                    mTop = size_4,
                     text = stringResource(id = R.string.loginRecoveryPassword),
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End
@@ -103,16 +129,16 @@ fun Login(
                     bgColor = Color.White,
                     textColor = Color.Black,
                     isBorder = true,
-                    mTop = 48.dp
-                ) { viewModel.onLogin() }
+                    mTop = size_48
+                ) { onLogin(false) }
 
                 JPSecondaryButton(
-                    mTop = 16.dp,
+                    mTop = size_16,
                     label = stringResource(id = R.string.loginWithGoogleButton),
                     imgButton = R.drawable.ic_google
                 ) {}
 
-                JPRow(mTop = 50.dp, isCenterHoz = true) {
+                JPRow(mTop = size_50, isCenterHoz = true) {
                     JPText(text = stringResource(id = R.string.loginNewUser), mEnd = size_6)
                     JPTextButton(
                         text = stringResource(id = R.string.loginCreateAccount),
@@ -129,5 +155,5 @@ fun Login(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun LoginPreview() {
-    Login()
+    LoginScreen(UIState(), LoginData())
 }

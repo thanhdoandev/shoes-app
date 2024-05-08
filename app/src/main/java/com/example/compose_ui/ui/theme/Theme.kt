@@ -68,14 +68,14 @@ fun Compose_uiTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
+            window.statusBarColor = (if (darkTheme) primaryColor else bgPage).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
     val appCustomColor = if (darkTheme) {
-        AppCustomColors(bgColor = colorScheme.background, bgHeader = colorScheme.background)
+        AppCustomColors(bgColor = colorScheme.background, bgHeader = primaryColor)
     } else {
-        AppCustomColors(bgColor = bgPage, bgHeader = Color.White)
+        AppCustomColors(bgColor = bgPage, bgHeader = bgPage)
     }
 
     CompositionLocalProvider(LocalAppCustomColors provides appCustomColor) {

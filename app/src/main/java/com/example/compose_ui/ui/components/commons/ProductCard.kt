@@ -20,8 +20,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +33,6 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPImage
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.data.vo.Product
-import com.example.compose_ui.ui.theme.bgLoadingColor
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.size_6
@@ -53,26 +50,7 @@ fun ProductCard(
     Row {
         Spacer(modifier = Modifier.width(16.dp))
         if (isLoading) {
-            JPCard(
-                modifier = Modifier
-                    .width(180.dp)
-                    .height(220.dp)
-                    .padding(2.dp, 2.dp)
-                    .clickable {
-                        onViewDetail(product?.id.toString())
-                    },
-                elevation = size_6,
-                round = size_8,
-                padding = none
-            ) {
-                LinearProgressIndicator(
-                    color = bgLoadingColor,
-                    trackColor = MaterialTheme.colorScheme.background,
-                    modifier = Modifier
-                        .width(180.dp)
-                        .height(220.dp)
-                )
-            }
+            LoadingAnimation()
         } else {
             product?.run {
                 JPCard(

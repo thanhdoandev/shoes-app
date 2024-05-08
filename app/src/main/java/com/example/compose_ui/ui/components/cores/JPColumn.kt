@@ -1,22 +1,19 @@
 package com.example.compose_ui.ui.components.cores
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.example.compose_ui.R
 import com.example.compose_ui.ui.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.none
 
 @Composable
-fun JPLocalImage(
-    url: Int,
+fun JPColumn(
     modifier: Modifier = Modifier,
     marginAll: Dp = none,
     mTop: Dp = none,
@@ -32,25 +29,14 @@ fun JPLocalImage(
     pEnd: Dp = none,
     pHoz: Dp = none,
     pVer: Dp = none,
-    height: Dp? = null,
-    width: Dp? = null,
-    size: Dp? = null
+    isCenterHoz: Boolean = false,
+    isCenterVer: Boolean = false,
+    hoz: Alignment.Horizontal = Alignment.Start,
+    ver: Arrangement.Vertical = Arrangement.Top,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
-    Image(
-        painter = painterResource(id = url),
-        contentDescription = "",
-        modifier = when {
-            height != null && width != null -> {
-                modifier
-                    .width(width)
-                    .height(height)
-            }
-
-            size != null -> modifier.size(size)
-            height != null -> modifier.height(height)
-            width != null -> modifier.width(width)
-            else -> modifier
-        }.modifierMargin(
+    Column(
+        modifier = modifier.modifierMargin(
             Margin(
                 marginAll,
                 mTop,
@@ -67,12 +53,18 @@ fun JPLocalImage(
                 pHoz,
                 pVer
             )
-        )
-    )
+        ),
+        horizontalAlignment = if (isCenterHoz) Alignment.CenterHorizontally else hoz,
+        verticalArrangement = if (isCenterVer) Arrangement.Center else ver
+    ) {
+        content()
+    }
 }
 
 @Composable
-@Preview(showSystemUi = true, showBackground = true)
-fun JPLocalImagePreview() {
-    JPLocalImage(R.drawable.product_3)
+@Preview(showBackground = true, showSystemUi = true)
+fun JPColumnPreview() {
+    JPColumn {
+
+    }
 }

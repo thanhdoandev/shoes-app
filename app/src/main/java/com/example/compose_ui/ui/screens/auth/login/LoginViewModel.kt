@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
     private val _isLoginSuccess = MutableStateFlow(false)
     val isLoginSuccess = _isLoginSuccess.asStateFlow()
 
-    internal fun onLogin() {
+    internal fun login() {
         loginToServer(loginData.value.email, loginData.value.password) {
             _isLoginSuccess.value = it
         }

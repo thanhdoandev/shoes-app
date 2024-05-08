@@ -1,9 +1,6 @@
 package com.example.compose_ui.ui.components.cores
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -14,33 +11,60 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.extensions.modifierMargin
+import com.example.compose_ui.ui.theme.none
 
 @Composable
 fun JPIcon(
     modifier: Modifier = Modifier,
     icon: ImageVector,
-    mTop: Dp = 0.dp,
-    mStart: Dp = 0.dp,
+    marginAll: Dp = none,
+    mTop: Dp = none,
+    mEnd: Dp = none,
+    mStart: Dp = none,
+    mBottom: Dp = none,
+    mHoz: Dp = none,
+    mVer: Dp = none,
+    paddingAll: Dp = none,
+    pTop: Dp = none,
+    pBottom: Dp = none,
+    pStart: Dp = none,
+    pEnd: Dp = none,
+    pHoz: Dp = none,
+    pVer: Dp = none,
     size: Dp = 24.dp,
     color: Color = LocalContentColor.current,
     onClick: () -> Unit = {}
 ) {
-    Column(modifier) {
-        Spacer(modifier = Modifier.height(mTop))
-        JPRow {
-            JPSpacer(w = mStart)
-            Icon(
-                imageVector = icon,
-                contentDescription = "",
-                modifier = Modifier
-                    .size(size)
-                    .clickable {
-                        onClick()
-                    },
-                tint = color
+    Icon(
+        imageVector = icon,
+        contentDescription = "",
+        modifier = modifier
+            .modifierMargin(
+                Margin(
+                    marginAll,
+                    mTop,
+                    mEnd,
+                    mStart,
+                    mBottom,
+                    mHoz,
+                    mVer,
+                    paddingAll,
+                    pTop,
+                    pBottom,
+                    pStart,
+                    pEnd,
+                    pHoz,
+                    pVer
+                )
             )
-        }
-    }
+            .size(size)
+            .clickable {
+                onClick()
+            },
+        tint = color
+    )
 }
 
 @Composable

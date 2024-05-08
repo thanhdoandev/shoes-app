@@ -37,6 +37,7 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
         const val SHOES = "shoes"
         const val ID = "id"
         const val CATEGORIES = "categories"
+        const val TYPE = "type"
     }
 
     private fun resetState(boolean: Boolean = false, string: String? = "") {
@@ -114,10 +115,11 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
         path: String,
         field: String,
         value: String,
+        isLoading: Boolean = true,
         onSuccess: (QuerySnapshot) -> Unit
     ) {
         try {
-            resetState(true)
+            resetState(isLoading)
             getCollection(path).whereEqualTo(field, value).get().addOnSuccessListener { documents ->
                 documents?.let(onSuccess)
                 resetState(false)
@@ -172,6 +174,19 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
             for (document in it) {
                 onFinish(getProductInfo(document))
             }
+        }
+    }
+
+    protected fun getSimilarProducts(
+        type: String,
+        onFinish: (products: MutableList<Product>) -> Unit
+    ) {
+        callApiWhereFromFirebase(SHOES, TYPE, type, isLoading = false) {
+            val products: MutableList<Product> = mutableListOf()
+            for (document in it) {
+                products.add(getProductInfo(document))
+            }
+            onFinish(products)
         }
     }
 
