@@ -1,15 +1,11 @@
 package com.example.compose_ui.ui.components.cores
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -20,13 +16,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.extensions.modifierMargin
+import com.example.compose_ui.ui.theme.none
 
 @Composable
 fun JPText(
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.padding().padding(),
     color: Color? = null,
     size: TextUnit? = null,
     family: FontFamily? = FontFamily.Default,
@@ -34,10 +32,20 @@ fun JPText(
     textAlign: TextAlign? = null,
     fontWeight: FontWeight? = null,
     lineHeight: TextUnit = 24.sp,
-    mTop: Dp = 0.dp,
-    mBottom: Dp = 0.dp,
-    mStart: Dp = 0.dp,
-    mEnd: Dp = 0.dp,
+    marginAll: Dp = none,
+    mTop: Dp = none,
+    mEnd: Dp = none,
+    mStart: Dp = none,
+    mBottom: Dp = none,
+    mHoz: Dp = none,
+    mVer: Dp = none,
+    paddingAll: Dp = none,
+    pTop: Dp = none,
+    pBottom: Dp = none,
+    pStart: Dp = none,
+    pEnd: Dp = none,
+    pHoz: Dp = none,
+    pVer: Dp = none,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     style: TextStyle = typography.bodyMedium,
@@ -57,24 +65,34 @@ fun JPText(
     if (isCenter) {
         newModifier = modifier.fillMaxWidth()
     }
-    Column {
-        JPSpacer(h = mTop)
-        Row {
-            JPSpacer(w = mStart)
-            Text(
-                style = newStyle,
-                modifier = newModifier,
-                text = text,
-                fontFamily = family,
-                lineHeight = lineHeight,
-                maxLines = maxLines,
-                overflow = overflow,
-                textAlign = if (isCenter) TextAlign.Center else textAlign,
+    Text(
+        style = newStyle,
+        modifier = newModifier.modifierMargin(
+            Margin(
+                marginAll,
+                mTop,
+                mEnd,
+                mStart,
+                mBottom,
+                mHoz,
+                mVer,
+                paddingAll,
+                pTop,
+                pBottom,
+                pStart,
+                pEnd,
+                pHoz,
+                pVer
             )
-            JPSpacer(w = mEnd)
-        }
-        JPSpacer(h = mBottom)
-    }
+        ),
+        text = text,
+        fontFamily = family,
+        lineHeight = lineHeight,
+        maxLines = maxLines,
+        overflow = overflow,
+        textAlign = if (isCenter) TextAlign.Center else textAlign,
+    )
+
 }
 
 @Composable

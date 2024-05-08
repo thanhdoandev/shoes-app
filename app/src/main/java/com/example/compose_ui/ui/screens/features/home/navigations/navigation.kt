@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.screens.features.home.navigations
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,6 +12,7 @@ import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.navigations.pushToScreen
 import com.example.compose_ui.ui.screens.features.home.Home
 import com.example.compose_ui.ui.screens.features.home.ui.detail.ShoesDetail
+import com.example.compose_ui.ui.screens.features.home.ui.detail.ShoesDetailViewModel
 import com.example.compose_ui.ui.screens.features.home.ui.seach.SearchScreen
 
 fun NavGraphBuilder.homeGraph(
@@ -34,8 +36,8 @@ fun NavGraphBuilder.homeGraph(
                 when (screen.route) {
                     EScreenName.HOME -> {
                         Home(
-                            onViewDetail = {
-                                navController.navigate("${getScreenName(EScreenName.SHOES)}$it")
+                            onViewDetail = { shoesId ->
+                                navController.navigate("${getScreenName(EScreenName.SHOES)}$shoesId")
                             },
                             onClickSearch = {
                                 navController.pushToScreen(EScreenName.SEARCH_SCREEN)
@@ -44,7 +46,9 @@ fun NavGraphBuilder.homeGraph(
                     }
 
                     EScreenName.SHOES_DETAIL -> {
-                        ShoesDetail(it.arguments?.getString("shoesId").toString()) {
+                        ShoesDetail(
+                            viewModel = hiltViewModel<ShoesDetailViewModel>(it, "shoesId")
+                        ) {
                             navController.popBackStack()
                         }
                     }

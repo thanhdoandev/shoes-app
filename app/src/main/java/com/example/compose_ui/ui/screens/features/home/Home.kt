@@ -1,13 +1,10 @@
 package com.example.compose_ui.ui.screens.features.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -17,8 +14,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -28,9 +23,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.commons.BannerCard
 import com.example.compose_ui.ui.components.commons.ProductCard
+import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
@@ -38,6 +33,8 @@ import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
+import com.example.compose_ui.ui.data.vo.Category
+import com.example.compose_ui.ui.data.vo.Product
 import com.example.compose_ui.ui.screens.features.home.components.CategoriesTitle
 import com.example.compose_ui.ui.screens.features.home.components.Category
 import com.example.compose_ui.ui.theme.none
@@ -58,12 +55,26 @@ fun Home(
     onClickSearch: () -> Unit = {},
     onClickCart: () -> Unit = {}
 ) {
-    val categories by viewModel.categories.collectAsState()
-    val products by viewModel.products.collectAsState()
-    val loadingCategories by viewModel.isLoadingCategories.collectAsState()
-    val loadingProducts by viewModel.isLoadingProducts.collectAsState()
+    viewModel.run {
+        HomeScreen(
+            isLoadingCategories = isLoadingCategories.collectAsState().value,
+            isLoadingProducts = isLoadingProducts.collectAsState().value,
+            products = products.collectAsState().value,
+            categories = categories.collectAsState().value,
+            onDetailProduct = onViewDetail
+        )
+    }
+}
 
-    ContainerPage(isVisibleHeader = false) {
+@Composable
+private fun HomeScreen(
+    isLoadingCategories: Boolean = false,
+    isLoadingProducts: Boolean = false,
+    products: MutableList<Product> = mutableListOf(),
+    categories: MutableList<Category> = mutableListOf(),
+    onDetailProduct: (id: String) -> Unit = {}
+) {
+    ContainerPage {
         JPCard(
             roundBottomEnd = size_16,
             roundBottomStart = size_16,
@@ -115,15 +126,15 @@ fun Home(
                     size = size_32,
                     mTop = size_12
                 )
-                Row(
+                JPRow(
                     Modifier
                         .constrainAs(search) {
                             bottom.linkTo(parent.bottom)
                             start.linkTo(parent.start)
                         }
                         .padding(size_16),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                    isCenterVer = true,
+                    isCenterHoz = true
                 ) {
                     SearchInput(
                         onValueChange = {},
@@ -143,28 +154,25 @@ fun Home(
         }
         JPColumn(Modifier.verticalScroll(rememberScrollState())) {
             JPSpacer(h = size_20)
-            CategoriesTitle(title = R.string.homeCategories)
             LazyRow(Modifier.padding(none, size_8)) {
-                if (loadingCategories) {
-                    items(3) {
-                        Category("", isLoading = true)
-                    }
-                }
-                items(categories) {
-                    Category(it.name)
+                items(if (isLoadingCategories) 5 else categories.size) {
+                    Category(
+                        categories.getOrNull(it)?.name.toString(),
+                        isLoading = isLoadingCategories
+                    )
                 }
             }
-            CategoriesTitle(title = R.string.homePopularShoes, actionTitle = R.string.homeSeeAll) {
-
-            }
+            CategoriesTitle(title = R.string.homePopularShoes, actionTitle = R.string.homeSeeAll) {}
             LazyRow(Modifier.padding(none, size_8)) {
-                if (loadingProducts) {
-                    items(3) {
-                        ProductCard(isLoading = true)
-                    }
-                }
-                items(products) {
-                    ProductCard(product = it, onViewDetail = { onViewDetail(it) }, onAddToCart = {})
+                items(if (isLoadingProducts) 3 else products.size) { position ->
+                    ProductCard(
+                        product = products.getOrNull(position),
+                        onViewDetail = {
+                            onDetailProduct(products.getOrNull(position)?.id.toString())
+                        },
+                        onAddToCart = {},
+                        isLoading = isLoadingProducts
+                    )
                 }
             }
             CategoriesTitle(title = R.string.homeNewArrivals, actionTitle = R.string.homeSeeAll) {
@@ -179,7 +187,7 @@ fun Home(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun HomePreview() {
-    Home {
+    HomeScreen {
 
     }
 }

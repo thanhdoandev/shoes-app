@@ -1,6 +1,9 @@
 package com.example.compose_ui.ui.components.bases
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.compose_ui.ui.components.commons.apps.HeaderPage
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPText
@@ -36,16 +40,16 @@ import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgLoadingColor
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.secondaryText
+import com.example.compose_ui.ui.theme.size_8
 
 @Composable
 fun ContainerPage(
-    isVisibleHeader: Boolean = true,
     title: String = "",
     onBackScreen: () -> Unit = {},
     iconAction: ImageVector? = null,
     onActionClick: () -> Unit = {},
-    bgColor: Color? = null,
     isBack: Boolean = true,
+    bgColor: Color? = null,
     uiState: UIState = UIState(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -60,81 +64,98 @@ fun ContainerPage(
         }
     }
 
-    ConstraintLayout(Modifier.fillMaxSize()) {
-        val (header, container, loading) = createRefs()
-        if (isVisibleHeader) {
-            HeaderPage(
+    Scaffold(
+        topBar = {
+            AppTopBar(
+                isVisible = title.isNotBlank(),
                 title = title,
                 onBackScreen = { onBackScreen() },
                 iconAction = iconAction,
-                onActionClick = { onActionClick() },
-                isBack = isBack,
-                modifier = Modifier.constrainAs(header) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+                onActionClick = onActionClick,
+                isBack = isBack
             )
+        },
+        containerColor = if (uiState.isLoading) bgLoadingColor else bgColor
+            ?: CustomComposeTheme.appCustomColors.bgColor
+    ) { padding ->
+        Column(Modifier.padding(padding)) {
+
         }
-        Column(
+        ConstraintLayout(
             Modifier
-                .alpha(if (uiState.isLoading) 0.5f else 1.0f)
-                .background(
-                    if (uiState.isLoading) bgLoadingColor else bgColor
-                        ?: CustomComposeTheme.appCustomColors.bgColor
-                )
-                .constrainAs(container) {
-                    top.linkTo(header.bottom)
-                    start.linkTo(parent.start)
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            val (container, loading) = createRefs()
+            JPColumn(
+                Modifier
+                    .alpha(if (uiState.isLoading) 0.5f else 1.0f)
+                    .constrainAs(container) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                    }) {
+                content()
+            }
+            AnimatedVisibility(
+                visible = isVisibleDialogError,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                Dialog(onDismissRequest = {
+                    uiState.apply {
+                        isLoading = false
+                        message = ""
+                    }
+                    isVisibleDialogError = false
                 }) {
-            content()
-        }
-        if (isVisibleDialogError) {
-            Dialog(onDismissRequest = {
-                uiState.apply {
-                    isLoading = false
-                    message = ""
-                }
-                isVisibleDialogError = false
-            }) {
-                JPCard(
-                    roundTopStart = 16.dp,
-                    roundTopEnd = 16.dp,
-                    roundBottomStart = 16.dp,
-                    roundBottomEnd = 16.dp,
-                    bgColor = Color.White
-                ) {
-                    JPColumn(Modifier.padding(24.dp, 32.dp)) {
-                        JPText(
-                            text = "Error Message!",
-                            color = Color.Black,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        JPText(
-                            text = uiState.message,
-                            color = Color.Black,
-                            mTop = 8.dp
-                        )
+                    JPCard(
+                        roundTopStart = 16.dp,
+                        roundTopEnd = 16.dp,
+                        roundBottomStart = 16.dp,
+                        roundBottomEnd = 16.dp,
+                        bgColor = Color.White
+                    ) {
+                        JPColumn(Modifier.padding(24.dp, 32.dp)) {
+                            JPText(
+                                text = "Error Message!",
+                                color = Color.Black,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            JPText(
+                                text = uiState.message,
+                                color = Color.Black,
+                                mTop = size_8
+                            )
+                        }
                     }
                 }
             }
-        }
-        if (uiState.isLoading) {
-            Dialog(onDismissRequest = { }) {
-                Box(Modifier
-                    .constrainAs(loading) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }) {
+            AnimatedVisibility(
+                visible = uiState.isLoading,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable(enabled = false) { }
+                        .constrainAs(loading) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
                     Card(
                         shape = RoundedCornerShape(6.dp),
-                        backgroundColor = Color.White,
-                        modifier = Modifier.size(100.dp)
+                        modifier = Modifier.size(100.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.White,
+                        )
                     ) {
                         Column(
-                            modifier = Modifier.size(80.dp),
+                            modifier = Modifier.size(100.dp),
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -142,7 +163,7 @@ fun ContainerPage(
                                 modifier = Modifier
                                     .size(32.dp),
                                 color = primaryColor,
-                                backgroundColor = secondaryText,
+                                trackColor = secondaryText,
                                 strokeWidth = 4.dp,
                                 strokeCap = StrokeCap.Round
                             )
@@ -158,6 +179,5 @@ fun ContainerPage(
 @Preview(showSystemUi = true, showBackground = true)
 private fun ContainerPagePreview() {
     ContainerPage(title = "Container Page") {
-
     }
 }

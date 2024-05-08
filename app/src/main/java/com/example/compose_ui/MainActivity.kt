@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose_ui.ui.navigations.AppNavigation
 import com.example.compose_ui.ui.theme.Compose_uiTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,4 +26,15 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun JetPackComposeTest() {
+}
+
+
+@Composable
+@Preview(showSystemUi = true, showBackground = true)
+private fun JetPackComposeTestPreview() {
+    JetPackComposeTest()
 }

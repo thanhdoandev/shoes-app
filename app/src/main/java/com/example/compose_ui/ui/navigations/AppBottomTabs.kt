@@ -9,16 +9,17 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -75,14 +76,21 @@ fun AppBottomTabs(navController: NavHostController, isVisible: Boolean) {
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {
-        BottomNavigation(backgroundColor = MaterialTheme.colorScheme.background) {
+        NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
             bottomTabItems.forEach { screen ->
-                BottomNavigationItem(
+                NavigationBarItem(
                     alwaysShowLabel = true,
-                    selectedContentColor = primaryColor,
-                    unselectedContentColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
+//                    colors = NavigationBarItemColors(
+//                        selectedTextColor = primaryColor,
+//                        unselectedTextColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
+//                        selectedIconColor = primaryColor,
+//                        unselectedIconColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
+//                        selectedIndicatorColor = MaterialTheme.colorScheme.background,
+//                        disabledIconColor = Color.Gray,
+//                        disabledTextColor = Color.Gray
+//                    ),
                     icon = {
                         Icon(
                             screen.icon,

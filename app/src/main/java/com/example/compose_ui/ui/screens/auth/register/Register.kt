@@ -53,7 +53,7 @@ fun Register(
         }
     }
 
-    ContainerPage(isVisibleHeader = false, uiState = viewModel.uiState.collectAsState().value) {
+    ContainerPage(uiState = viewModel.uiState.collectAsState().value) {
         JPColumn {
             JPSpacer(h = size_28)
             JPIcon(icon = Icons.Default.ArrowBackIosNew, mStart = size_16, onClick = { onBack() })
