@@ -1,6 +1,5 @@
 package com.example.compose_ui.ui.components.cores
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -13,6 +12,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose_ui.ui.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
+import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.none
 
 @Composable
@@ -60,9 +60,7 @@ fun JPIcon(
                 )
             )
             .size(size)
-            .clickable {
-                onClick()
-            },
+            .onClickNoEffect { onClick() },
         tint = color
     )
 }

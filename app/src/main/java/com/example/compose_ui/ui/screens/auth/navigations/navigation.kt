@@ -15,14 +15,6 @@ import com.example.compose_ui.ui.screens.auth.register.RegisterViewModels
 import com.example.compose_ui.ui.screens.features.home.Home
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    composable(""){
-
-    }
-
-    composable(""){
-
-    }
-
     navigation(
         startDestination = EScreenName.getScreenName(EScreenName.LOGIN),
         route = EScreenName.getScreenName(EScreenName.AUTH_ROUTE)

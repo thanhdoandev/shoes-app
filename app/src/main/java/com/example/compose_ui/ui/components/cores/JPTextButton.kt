@@ -1,6 +1,5 @@
 package com.example.compose_ui.ui.components.cores
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.example.compose_ui.ui.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
+import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryText
 
@@ -47,9 +47,7 @@ fun JPTextButton(
     JPText(
         text,
         modifier
-            .clickable {
-                onClick()
-            }
+            .onClickNoEffect { onClick() }
             .modifierMargin(
                 Margin(
                     marginAll,

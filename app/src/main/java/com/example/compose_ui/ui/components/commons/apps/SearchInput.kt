@@ -1,74 +1,120 @@
 package com.example.compose_ui.ui.components.commons.apps
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
+import com.example.compose_ui.ui.components.cores.JPRow
+import com.example.compose_ui.ui.components.cores.JPSpacer
+import com.example.compose_ui.ui.components.cores.JPText
+import com.example.compose_ui.ui.extensions.onClickNoEffect
+import com.example.compose_ui.ui.theme.none
+import com.example.compose_ui.ui.theme.primaryColor
+import com.example.compose_ui.ui.theme.size_1
+import com.example.compose_ui.ui.theme.size_32
+import com.example.compose_ui.ui.theme.size_50
 
 @Composable
 fun SearchInput(
     modifier: Modifier = Modifier,
-    value: String = "",
     mTop: Dp = 16.dp,
-    color: Color = MaterialTheme.colors.background,
-    focusColor: Color? = null,
-    unFocusColor: Color? = null,
-    txtColor: Color = LocalContentColor.current.copy(LocalContentAlpha.current),
+    borderColor: Color = primaryColor,
+    bgColor: Color? = null,
+    hint: String = "",
+    value: String = "",
+    hintColor: Color? = null,
     isEnabled: Boolean = true,
+    icon: ImageVector? = null,
+    mHoz: Dp = none,
     onClick: () -> Unit = {},
+    onClickIcon: () -> Unit = {},
     onValueChange: (text: String) -> Unit,
 ) {
-    Column(modifier = modifier
-        .clickable { onClick() }) {
+
+    val bgSearch = bgColor ?: MaterialTheme.colorScheme.background
+    var searchValue by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(value) {
+        if (value != searchValue) {
+            searchValue = value
+        }
+    }
+
+    JPColumn(
+        modifier = modifier.onClickNoEffect { onClick() },
+        mHoz = mHoz
+    ) {
         Spacer(modifier = Modifier.height(mTop))
         TextField(
-            modifier = modifier
+            searchValue, {
+                searchValue = it
+                onValueChange(searchValue)
+            },
+            modifier
+                .fillMaxWidth()
                 .height(52.dp)
-                .border(border = BorderStroke(1.dp, color), shape = RoundedCornerShape(10)),
-            value = value,
+                .border(border = BorderStroke(1.dp, borderColor), shape = RoundedCornerShape(10)),
+            isEnabled,
             maxLines = 1,
             placeholder = {
-                Text(
-                    text = "Looking for the shoes",
-                    color = txtColor
-                )
+                JPText(text = hint, color = hintColor)
             },
             leadingIcon = {
-                JPIcon(icon = Icons.Default.Search, color = color)
+                JPIcon(icon = Icons.Default.Search, color = borderColor)
             },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = focusColor
-                    ?: MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
-                unfocusedBorderColor = unFocusColor
-                    ?: MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled),
-                textColor = txtColor,
-                disabledLabelColor = txtColor,
-                cursorColor = txtColor
+            trailingIcon = {
+                if (icon != null) {
+                    JPRow(
+                        Modifier.width(size_50),
+                        isCenterVer = true
+                    ) {
+                        JPSpacer(
+                            modifier
+                                .background(borderColor),
+                            w = size_1, h = size_32,
+                        )
+                        JPIcon(
+                            icon = icon,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = borderColor,
+                            onClick = { onClickIcon() }
+                        )
+                    }
+                }
+            },
+            colors = TextFieldDefaults.colors().copy(
+                focusedContainerColor = bgSearch,
+                unfocusedContainerColor = bgSearch,
+                unfocusedIndicatorColor = bgSearch,
+                focusedIndicatorColor = bgSearch,
+                disabledContainerColor = bgSearch
             ),
-            onValueChange = {
-                onValueChange(it)
-            },
-            singleLine = true,
-            enabled = isEnabled
+            singleLine = true
         )
         Spacer(modifier = Modifier.height(6.dp))
     }
@@ -77,7 +123,7 @@ fun SearchInput(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun SearchInputPreview() {
-    SearchInput {
+    SearchInput(hint = "Search ...") {
 
     }
 }

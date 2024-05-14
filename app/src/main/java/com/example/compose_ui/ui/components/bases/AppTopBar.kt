@@ -86,7 +86,7 @@ fun AppTopBar(
                                 size = 32.dp
                             )
                         }
-                    }
+                    } ?: IconButton(onClick = { /*TODO*/ }, enabled = false) {}
                 },
                 scrollBehavior = scrollBehavior
             )

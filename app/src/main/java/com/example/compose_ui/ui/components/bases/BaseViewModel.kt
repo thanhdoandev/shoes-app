@@ -1,5 +1,7 @@
 package com.example.compose_ui.ui.components.bases
 
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.compose_ui.ui.data.vo.Category
@@ -38,6 +40,9 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
         const val ID = "id"
         const val CATEGORIES = "categories"
         const val TYPE = "type"
+        const val NAME = "name"
+        const val SEARCH = "Search"
+        const val GET = "Get"
     }
 
     private fun resetState(boolean: Boolean = false, string: String? = "") {
@@ -95,6 +100,22 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
     }
 
     private fun getCollection(path: String) = database.collection(path)
+    private fun getQueryPath(
+        type: String? = GET,
+        path: String = SHOES,
+        field: String,
+        value: String
+    ) =
+        when {
+            type == SEARCH -> {
+                getCollection(path).whereArrayContains(field, value.toLowerCase(Locale.current))
+                    .limit(10)
+            }
+
+            else -> {
+                getCollection(path).whereEqualTo(field, value)
+            }
+        }
 
     private fun callApiFromFireBase(
         path: String,
@@ -115,15 +136,17 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
         path: String,
         field: String,
         value: String,
+        type: String = GET,
         isLoading: Boolean = true,
         onSuccess: (QuerySnapshot) -> Unit
     ) {
         try {
             resetState(isLoading)
-            getCollection(path).whereEqualTo(field, value).get().addOnSuccessListener { documents ->
-                documents?.let(onSuccess)
-                resetState(false)
-            }
+            getQueryPath(type = type, path = path, field = field, value = value).get()
+                .addOnSuccessListener { documents ->
+                    documents?.let(onSuccess)
+                    resetState(false)
+                }
         } catch (e: Exception) {
             resetState(false, e.message)
         }
@@ -185,6 +208,26 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
             val products: MutableList<Product> = mutableListOf()
             for (document in it) {
                 products.add(getProductInfo(document))
+            }
+            onFinish(products)
+        }
+    }
+
+    protected fun searchProducts(
+        productName: String,
+        onFinish: (products: MutableList<Product>) -> Unit
+    ) {
+        if (productName.isEmpty()) onFinish(mutableListOf())
+        callApiFromFireBase(SHOES) {
+            val products: MutableList<Product> = mutableListOf()
+            for (document in it) {
+                getProductInfo(document).let { pro ->
+                    if (pro.name.toLowerCase(Locale.current)
+                            .contains(productName.toLowerCase(Locale.current))
+                    ) {
+                        products.add(pro)
+                    }
+                }
             }
             onFinish(products)
         }

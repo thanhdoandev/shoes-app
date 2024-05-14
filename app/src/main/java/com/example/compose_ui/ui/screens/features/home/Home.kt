@@ -38,6 +38,7 @@ import com.example.compose_ui.ui.data.vo.Product
 import com.example.compose_ui.ui.screens.features.home.components.CategoriesTitle
 import com.example.compose_ui.ui.screens.features.home.components.Category
 import com.example.compose_ui.ui.theme.none
+import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.size_12
 import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_20
@@ -52,8 +53,7 @@ import com.example.compose_ui.ui.theme.size_8
 fun Home(
     viewModel: HomeViewModel = hiltViewModel(),
     onViewDetail: (id: String) -> Unit = {},
-    onClickSearch: () -> Unit = {},
-    onClickCart: () -> Unit = {}
+    onClickSearch: () -> Unit = {}
 ) {
     viewModel.run {
         HomeScreen(
@@ -61,7 +61,8 @@ fun Home(
             isLoadingProducts = isLoadingProducts.collectAsState().value,
             products = products.collectAsState().value,
             categories = categories.collectAsState().value,
-            onDetailProduct = onViewDetail
+            onDetailProduct = { onViewDetail(it) },
+            onClickSearch = onClickSearch
         )
     }
 }
@@ -72,7 +73,8 @@ private fun HomeScreen(
     isLoadingProducts: Boolean = false,
     products: MutableList<Product> = mutableListOf(),
     categories: MutableList<Category> = mutableListOf(),
-    onDetailProduct: (id: String) -> Unit = {}
+    onDetailProduct: (id: String) -> Unit = {},
+    onClickSearch: () -> Unit = {}
 ) {
     ContainerPage {
         JPCard(
@@ -138,10 +140,13 @@ private fun HomeScreen(
                 ) {
                     SearchInput(
                         onValueChange = {},
-                        color = Color.White,
-                        txtColor = Color.White,
+                        borderColor = Color.White,
+                        bgColor = primaryColor,
                         isEnabled = false,
-                        modifier = Modifier.wrapContentWidth()
+                        modifier = Modifier.wrapContentWidth(),
+                        onClick = { onClickSearch() },
+                        hint = "Search your shoes",
+                        hintColor = Color.White
                     )
                     JPIcon(
                         icon = Icons.Default.AddRoad,
@@ -152,6 +157,7 @@ private fun HomeScreen(
                 }
             }
         }
+        CategoriesTitle(title = R.string.homeCategories) {}
         JPColumn(Modifier.verticalScroll(rememberScrollState())) {
             JPSpacer(h = size_20)
             LazyRow(Modifier.padding(none, size_8)) {
@@ -165,12 +171,14 @@ private fun HomeScreen(
             CategoriesTitle(title = R.string.homePopularShoes, actionTitle = R.string.homeSeeAll) {}
             LazyRow(Modifier.padding(none, size_8)) {
                 items(if (isLoadingProducts) 3 else products.size) { position ->
+                    if (position == 0) JPSpacer(w = size_8)
                     ProductCard(
                         product = products.getOrNull(position),
                         onViewDetail = {
                             onDetailProduct(products.getOrNull(position)?.id.toString())
                         },
-                        onAddToCart = {},
+                        onAddToCart = {
+                        },
                         isLoading = isLoadingProducts
                     )
                 }

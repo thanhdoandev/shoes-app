@@ -82,6 +82,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.51")
     kapt("com.google.dagger:hilt-android-compiler:2.51")
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
 
 //    /*Firebase store*/
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))

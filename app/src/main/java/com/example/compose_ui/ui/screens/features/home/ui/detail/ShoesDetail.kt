@@ -96,7 +96,7 @@ private fun ShoesDetailScreen(
     onClickSimilarShoes: (id: String) -> Unit = {}
 ) {
     ContainerPage(
-        title = "${shoes?.name} ${stringResource(id = R.string.detail)}",
+        title = "${shoes?.name}",
         onBackScreen = { onCallBack() },
         uiState = uiState
     ) {

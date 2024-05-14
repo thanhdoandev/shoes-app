@@ -76,6 +76,7 @@ fun AppNavigation(isSigned: Boolean) {
                     color.toArgb()
                 }
         }
+
         NavHost(
             navHostController,
             route = EScreenName.getScreenName(EScreenName.APP_NAV),

@@ -8,13 +8,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -27,8 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -36,12 +38,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPText
+import com.example.compose_ui.ui.components.cores.Loading
+import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgLoadingColor
-import com.example.compose_ui.ui.theme.primaryColor
-import com.example.compose_ui.ui.theme.secondaryText
 import com.example.compose_ui.ui.theme.size_8
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ContainerPage(
     title: String = "",
@@ -63,13 +66,19 @@ fun ContainerPage(
             isVisibleDialogError = true
         }
     }
+    val focusManager = LocalFocusManager.current
+    val isKeyBoarVisible: Boolean = WindowInsets.isImeVisible
 
     Scaffold(
+        modifier = Modifier.onClickNoEffect { if (isKeyBoarVisible) focusManager.clearFocus() },
         topBar = {
             AppTopBar(
                 isVisible = title.isNotBlank(),
                 title = title,
-                onBackScreen = { onBackScreen() },
+                onBackScreen = {
+                    focusManager.clearFocus()
+                    onBackScreen()
+                },
                 iconAction = iconAction,
                 onActionClick = onActionClick,
                 isBack = isBack
@@ -78,9 +87,6 @@ fun ContainerPage(
         containerColor = if (uiState.isLoading) bgLoadingColor else bgColor
             ?: CustomComposeTheme.appCustomColors.bgColor
     ) { padding ->
-        Column(Modifier.padding(padding)) {
-
-        }
         ConstraintLayout(
             Modifier
                 .fillMaxSize()
@@ -159,14 +165,7 @@ fun ContainerPage(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .size(32.dp),
-                                color = primaryColor,
-                                trackColor = secondaryText,
-                                strokeWidth = 4.dp,
-                                strokeCap = StrokeCap.Round
-                            )
+                            Loading()
                         }
                     }
                 }
