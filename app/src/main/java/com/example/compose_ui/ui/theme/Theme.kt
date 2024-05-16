@@ -43,6 +43,7 @@ private val LightColorScheme = lightColorScheme(
 data class AppCustomColors(
     val bgColor: Color = Color.Unspecified,
     val bgHeader: Color = Color.Unspecified,
+    val bgMenu: Color = Color.Unspecified
 )
 
 val LocalAppCustomColors = staticCompositionLocalOf {
@@ -73,9 +74,17 @@ fun Compose_uiTheme(
         }
     }
     val appCustomColor = if (darkTheme) {
-        AppCustomColors(bgColor = colorScheme.background, bgHeader = primaryColor)
+        AppCustomColors(
+            bgColor = colorScheme.background,
+            bgHeader = primaryColor,
+            bgMenu = colorScheme.background
+        )
     } else {
-        AppCustomColors(bgColor = bgPage, bgHeader = bgPage)
+        AppCustomColors(
+            bgColor = bgPage,
+            bgHeader = bgPage,
+            bgMenu = bgPage
+        )
     }
 
     CompositionLocalProvider(LocalAppCustomColors provides appCustomColor) {

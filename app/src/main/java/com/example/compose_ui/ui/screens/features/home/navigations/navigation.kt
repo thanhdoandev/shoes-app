@@ -16,7 +16,8 @@ import com.example.compose_ui.ui.screens.features.home.ui.detail.ShoesDetailView
 import com.example.compose_ui.ui.screens.features.home.ui.seach.Search
 
 fun NavGraphBuilder.homeGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onOpenMenu: () -> Unit
 ) {
     navigation(
         startDestination = getScreenName(EScreenName.HOME),
@@ -41,7 +42,8 @@ fun NavGraphBuilder.homeGraph(
                             },
                             onClickSearch = {
                                 navController.pushToScreen(EScreenName.SEARCH_SCREEN)
-                            }
+                            },
+                            onOpenMenu = onOpenMenu
                         )
                     }
 

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="MenuBarsPreview">
+        <State />
+      </entry>
       <entry key="MicroAnimationPreview">
         <State />
       </entry>
@@ -12,9 +15,6 @@
         <State />
       </entry>
       <entry key="SearchScreenMicroPhonePreview">
-        <State />
-      </entry>
-      <entry key="SearchScreenPreview">
         <State />
       </entry>
       <entry key="app">
@@ -33,15 +33,6 @@
           <timeTargetWasSelectedWithDropDown value="2024-05-13T08:36:56.205850Z" />
           <multipleDevicesSelectedInDropDown value="true" />
           <targetsSelectedWithDialog>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Medium_Phone_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
               <deviceKey>

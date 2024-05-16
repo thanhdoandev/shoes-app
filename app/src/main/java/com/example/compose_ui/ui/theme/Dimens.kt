@@ -25,4 +25,5 @@ val size_60 = 60.dp
 val size_80 = 80.dp
 val size_100 = 100.dp
 val size_110 = 110.dp
+val size_120 = 120.dp
 val size_250 = 250.dp
