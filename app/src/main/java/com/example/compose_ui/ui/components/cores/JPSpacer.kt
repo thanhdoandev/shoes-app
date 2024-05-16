@@ -9,9 +9,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun JPSpacer(h: Dp = 0.dp, w: Dp = 0.dp) {
+fun JPSpacer(modifier: Modifier = Modifier, h: Dp = 0.dp, w: Dp = 0.dp) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .width(w)
             .height(h)
     )

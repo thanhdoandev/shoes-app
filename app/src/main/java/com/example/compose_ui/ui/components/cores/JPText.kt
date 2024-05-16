@@ -24,7 +24,7 @@ import com.example.compose_ui.ui.theme.none
 @Composable
 fun JPText(
     text: String,
-    modifier: Modifier = Modifier.padding().padding(),
+    modifier: Modifier = Modifier,
     color: Color? = null,
     size: TextUnit? = null,
     family: FontFamily? = FontFamily.Default,

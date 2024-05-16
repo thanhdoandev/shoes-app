@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -19,11 +18,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -33,7 +30,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
-import com.example.compose_ui.ui.theme.primaryColor
 
 sealed class BottomTab(
     val route: EScreenName,
@@ -82,15 +78,6 @@ fun AppBottomTabs(navController: NavHostController, isVisible: Boolean) {
             bottomTabItems.forEach { screen ->
                 NavigationBarItem(
                     alwaysShowLabel = true,
-//                    colors = NavigationBarItemColors(
-//                        selectedTextColor = primaryColor,
-//                        unselectedTextColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
-//                        selectedIconColor = primaryColor,
-//                        unselectedIconColor = if (isSystemInDarkTheme()) Color.White else Color.Gray,
-//                        selectedIndicatorColor = MaterialTheme.colorScheme.background,
-//                        disabledIconColor = Color.Gray,
-//                        disabledTextColor = Color.Gray
-//                    ),
                     icon = {
                         Icon(
                             screen.icon,

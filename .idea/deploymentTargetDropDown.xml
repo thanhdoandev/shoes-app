@@ -2,45 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ContainerPagePreview">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Medium_Phone_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-06T07:14:48.659540Z" />
-        </State>
-      </entry>
-      <entry key="JetPackComposeTestPreview">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Medium_Phone_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-06T07:10:32.954268Z" />
-        </State>
-      </entry>
-      <entry key="LoadingAnimationPreview">
+      <entry key="MenuBarsPreview">
         <State />
       </entry>
-      <entry key="PreviewLoading">
+      <entry key="MicroAnimationPreview">
         <State />
       </entry>
-      <entry key="ShoesDetailPreview">
+      <entry key="ProductCardRowPreview">
+        <State />
+      </entry>
+      <entry key="SearchLoadingScreenPreview">
+        <State />
+      </entry>
+      <entry key="SearchScreenMicroPhonePreview">
         <State />
       </entry>
       <entry key="app">
@@ -50,13 +24,13 @@
               <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Medium_Phone_API_34.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="R58M30R3Q4Y" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-25T07:59:55.464444Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-13T08:36:56.205850Z" />
           <multipleDevicesSelectedInDropDown value="true" />
           <targetsSelectedWithDialog>
             <Target>
@@ -64,16 +38,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Medium_Phone_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_7_Pro_API_34.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_Pro_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>

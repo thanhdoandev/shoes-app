@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">compose_ui</string>
+    <string name="app_name">Shoes App</string>
 
     <!--Tabs name-->
     <string name="homeNameTab">Home</string>
@@ -45,6 +45,21 @@
     <string name="productRelated">Related products</string>
     <string name="addToCart">Add to Cart</string>
 
+    <!--Search-->
+    <string name="searchLabel">Search</string>
+    <string name="searchHint">Search your shoes</string>
+    <string name="shoesLabel">Shoes</string>
+
     <!--Commons-->
     <string name="nextLabelButton">Next</string>
+    <string name="cancelLabel">Cancel</string>
+
+    <!--Menu-->
+    <string name="settingLabel">Settings</string>
+    <string name="homeLabel">Home</string>
+    <string name="orderDeliveryLabel">Order Delivery</string>
+    <string name="historyOrder">History Order</string>
+    <string name="languageSetting">Language Settings</string>
+    <string name="darkMode">Dark Theme</string>
+    <string name="logoutButton">Log out</string>
 </resources>

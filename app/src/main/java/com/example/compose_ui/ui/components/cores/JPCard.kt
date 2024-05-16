@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.components.cores
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +33,7 @@ fun JPCard(
     bgColor: Color = primaryColor,
     contentColor: Color = Color.White,
     isMaxSize: Boolean = false,
+    onClick: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var newModifier = modifier
@@ -54,7 +56,9 @@ fun JPCard(
             bottomEnd = round ?: roundBottomEnd,
             bottomStart = round ?: roundBottomStart
         ),
-        modifier = newModifier,
+        modifier = newModifier.clickable {
+            onClick()
+        },
         colors = CardDefaults.cardColors(
             containerColor = bgColor,
             contentColor = contentColor

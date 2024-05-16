@@ -1,6 +1,7 @@
 package com.example.compose_ui.ui.screens.auth.navigations
 
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,16 +14,9 @@ import com.example.compose_ui.ui.screens.auth.login.LoginViewModel
 import com.example.compose_ui.ui.screens.auth.register.Register
 import com.example.compose_ui.ui.screens.auth.register.RegisterViewModels
 import com.example.compose_ui.ui.screens.features.home.Home
+import com.example.compose_ui.ui.screens.features.home.HomeViewModel
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    composable(""){
-
-    }
-
-    composable(""){
-
-    }
-
     navigation(
         startDestination = EScreenName.getScreenName(EScreenName.LOGIN),
         route = EScreenName.getScreenName(EScreenName.AUTH_ROUTE)
@@ -47,7 +41,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
                     }
 
                     EScreenName.HOME -> {
-                        Home()
+                        Home(HomeViewModel(SavedStateHandle()))
                     }
 
                     else -> {

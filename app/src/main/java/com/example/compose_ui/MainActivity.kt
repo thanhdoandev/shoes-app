@@ -6,7 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose_ui.ui.navigations.AppNavigation
 import com.example.compose_ui.ui.theme.Compose_uiTheme
@@ -20,9 +23,13 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            Compose_uiTheme() {
-                AppNavigation(isSigned = viewModel.getIsSigned())
+            val isSystemDark = isSystemInDarkTheme()
+            val enableDarkMode = rememberSaveable { mutableStateOf(isSystemDark) }
+
+            Compose_uiTheme(darkTheme = enableDarkMode.value) {
+                AppNavigation(isSigned = viewModel.getIsSigned(), enableDarkMode = enableDarkMode)
             }
         }
     }

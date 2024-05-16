@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.screens.features.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,9 +36,11 @@ import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.data.vo.Category
 import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.screens.features.home.components.CategoriesTitle
 import com.example.compose_ui.ui.screens.features.home.components.Category
 import com.example.compose_ui.ui.theme.none
+import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.size_12
 import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_20
@@ -53,7 +56,7 @@ fun Home(
     viewModel: HomeViewModel = hiltViewModel(),
     onViewDetail: (id: String) -> Unit = {},
     onClickSearch: () -> Unit = {},
-    onClickCart: () -> Unit = {}
+    onOpenMenu: () -> Unit = {}
 ) {
     viewModel.run {
         HomeScreen(
@@ -61,7 +64,9 @@ fun Home(
             isLoadingProducts = isLoadingProducts.collectAsState().value,
             products = products.collectAsState().value,
             categories = categories.collectAsState().value,
-            onDetailProduct = onViewDetail
+            onDetailProduct = onViewDetail,
+            onClickSearch = onClickSearch,
+            onOpenMenu = onOpenMenu
         )
     }
 }
@@ -72,7 +77,9 @@ private fun HomeScreen(
     isLoadingProducts: Boolean = false,
     products: MutableList<Product> = mutableListOf(),
     categories: MutableList<Category> = mutableListOf(),
-    onDetailProduct: (id: String) -> Unit = {}
+    onDetailProduct: (id: String) -> Unit = {},
+    onClickSearch: () -> Unit = {},
+    onOpenMenu: () -> Unit = {}
 ) {
     ContainerPage {
         JPCard(
@@ -95,21 +102,17 @@ private fun HomeScreen(
                     },
                     icon = Icons.Default.Menu,
                     size = size_40,
-                    mTop = size_12
+                    mTop = size_12,
+                    onClick = { onOpenMenu() }
                 )
-                JPRow(
-                    modifier = Modifier
-                        .constrainAs(title) {
-                            start.linkTo(menu.end)
-                            end.linkTo(notification.start)
-                        }
-                        .fillMaxWidth(),
-                    isCenterHoz = true,
-                    mTop = size_4
-                ) {
+                JPRow(modifier = Modifier
+                    .constrainAs(title) {
+                        start.linkTo(menu.end)
+                        end.linkTo(notification.start)
+                    }
+                    .fillMaxWidth(), isCenterHoz = true, mTop = size_4) {
                     JPLocalImage(
-                        url = R.drawable.ic_first_intro_2,
-                        size = size_24
+                        url = R.drawable.ic_first_intro_2, size = size_24
                     )
                     JPText(
                         text = stringResource(id = R.string.homeExplore),
@@ -121,10 +124,7 @@ private fun HomeScreen(
                     Modifier.constrainAs(notification) {
                         top.linkTo(parent.top)
                         end.linkTo(parent.end)
-                    },
-                    icon = Icons.Default.Notifications,
-                    size = size_32,
-                    mTop = size_12
+                    }, icon = Icons.Default.Notifications, size = size_32, mTop = size_12
                 )
                 JPRow(
                     Modifier
@@ -132,16 +132,16 @@ private fun HomeScreen(
                             bottom.linkTo(parent.bottom)
                             start.linkTo(parent.start)
                         }
-                        .padding(size_16),
-                    isCenterVer = true,
-                    isCenterHoz = true
-                ) {
+                        .padding(size_16), isCenterVer = true, isCenterHoz = true) {
                     SearchInput(
                         onValueChange = {},
-                        color = Color.White,
-                        txtColor = Color.White,
+                        borderColor = Color.White,
+                        bgColor = primaryColor,
                         isEnabled = false,
-                        modifier = Modifier.wrapContentWidth()
+                        modifier = Modifier.wrapContentWidth(),
+                        onClick = { onClickSearch() },
+                        hint = "Search your shoes",
+                        hintColor = Color.White
                     )
                     JPIcon(
                         icon = Icons.Default.AddRoad,
@@ -152,26 +152,23 @@ private fun HomeScreen(
                 }
             }
         }
+        CategoriesTitle(title = R.string.homeCategories) {}
         JPColumn(Modifier.verticalScroll(rememberScrollState())) {
             JPSpacer(h = size_20)
             LazyRow(Modifier.padding(none, size_8)) {
                 items(if (isLoadingCategories) 5 else categories.size) {
                     Category(
-                        categories.getOrNull(it)?.name.toString(),
-                        isLoading = isLoadingCategories
+                        categories.getOrNull(it)?.name.toString(), isLoading = isLoadingCategories
                     )
                 }
             }
             CategoriesTitle(title = R.string.homePopularShoes, actionTitle = R.string.homeSeeAll) {}
             LazyRow(Modifier.padding(none, size_8)) {
                 items(if (isLoadingProducts) 3 else products.size) { position ->
-                    ProductCard(
-                        product = products.getOrNull(position),
-                        onViewDetail = {
-                            onDetailProduct(products.getOrNull(position)?.id.toString())
-                        },
-                        onAddToCart = {},
-                        isLoading = isLoadingProducts
+                    if (position == 0) JPSpacer(w = size_8)
+                    ProductCard(product = products.getOrNull(position), onViewDetail = {
+                        onDetailProduct(products.getOrNull(position)?.id.toString())
+                    }, onAddToCart = {}, isLoading = isLoadingProducts
                     )
                 }
             }

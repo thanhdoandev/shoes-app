@@ -13,10 +13,11 @@ import com.example.compose_ui.ui.navigations.pushToScreen
 import com.example.compose_ui.ui.screens.features.home.Home
 import com.example.compose_ui.ui.screens.features.home.ui.detail.ShoesDetail
 import com.example.compose_ui.ui.screens.features.home.ui.detail.ShoesDetailViewModel
-import com.example.compose_ui.ui.screens.features.home.ui.seach.SearchScreen
+import com.example.compose_ui.ui.screens.features.home.ui.seach.Search
 
 fun NavGraphBuilder.homeGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onOpenMenu: () -> Unit
 ) {
     navigation(
         startDestination = getScreenName(EScreenName.HOME),
@@ -41,7 +42,8 @@ fun NavGraphBuilder.homeGraph(
                             },
                             onClickSearch = {
                                 navController.pushToScreen(EScreenName.SEARCH_SCREEN)
-                            }
+                            },
+                            onOpenMenu = onOpenMenu
                         )
                     }
 
@@ -54,7 +56,12 @@ fun NavGraphBuilder.homeGraph(
                     }
 
                     EScreenName.SEARCH_SCREEN -> {
-                        SearchScreen()
+                        Search(
+                            onClickItem = { id ->
+                                navController.navigate("${getScreenName(EScreenName.SHOES)}$id")
+                            },
+                            onBack = { navController.popBackStack() }
+                        )
                     }
 
                     else -> {}
