@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Shoes App</string>
+    <string name="app_name" translatable="false">Shoes App</string>
 
-    <!--Tabs name-->
+    <string name="en" translatable="false">English</string>
+    <string name="vi" translatable="false">Tiếng Việt</string>
     <string name="homeNameTab">Home</string>
     <string name="favoriteNameTab">Favorites</string>
     <string name="profileNameTab">Profile</string>
@@ -59,7 +60,12 @@
     <string name="homeLabel">Home</string>
     <string name="orderDeliveryLabel">Order Delivery</string>
     <string name="historyOrder">History Order</string>
-    <string name="languageSetting">Language Settings</string>
     <string name="darkMode">Dark Theme</string>
     <string name="logoutButton">Log out</string>
+
+    <!--Settings-->
+    <string name="settingLanguage">Language</string>
+    <string name="settingPrivacyAndSecurity">Privacy &amp; Security</string>
+    <string name="settingSupport">Support</string>
+    <string name="settingAbout">About</string>
 </resources>

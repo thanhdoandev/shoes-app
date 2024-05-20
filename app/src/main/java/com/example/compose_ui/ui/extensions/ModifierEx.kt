@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.extensions
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -53,6 +54,7 @@ fun Modifier.modifierMargin(marginLayout: Margin): Modifier {
     return modifier
 }
 
+@SuppressLint("ModifierFactoryUnreferencedReceiver")
 @Composable
 fun Modifier.onClickNoEffect(onClick: () -> Unit): Modifier = composed {
     clickable(

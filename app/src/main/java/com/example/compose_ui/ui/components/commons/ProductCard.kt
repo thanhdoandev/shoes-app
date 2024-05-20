@@ -38,6 +38,7 @@ import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
+import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_8
 import java.util.Random
 
@@ -50,7 +51,7 @@ fun ProductCard(
     isLoading: Boolean = false,
 ) {
     if (isLoading) {
-        LoadingAnimation()
+        LoadingAnimation(mHoz = size_8)
     } else {
         JPCard(
             modifier = Modifier

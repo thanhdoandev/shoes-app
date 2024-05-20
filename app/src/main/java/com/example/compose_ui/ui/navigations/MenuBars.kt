@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DeliveryDining
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -54,37 +53,32 @@ sealed class Screens(
 ) {
     data object Home : Screens(
         title = R.string.homeNameTab,
-        route = EScreenName.HOME,
+        route = EScreenName.HOME_ROUTE,
         icon = Icons.Default.Home,
     )
 
     data object Settings : Screens(
         title = R.string.settingLabel,
-        route = EScreenName.SETTINGS,
+        route = EScreenName.SETTING_ROUTER,
         icon = Icons.Default.Settings
     )
 
     data object Delivery : Screens(
         title = R.string.orderDeliveryLabel,
-        route = EScreenName.ORDER_DELIVERY,
+        route = EScreenName.DELIVERY_ROUTER,
         icon = Icons.Default.DeliveryDining,
     )
 
     data object HistoriesOrder : Screens(
         title = R.string.historyOrder,
-        route = EScreenName.SETTINGS,
+        route = EScreenName.HISTORY_ROUTE,
         icon = Icons.Default.History
     )
 
-    data object LanguageSetting : Screens(
-        title = R.string.languageSetting,
-        route = EScreenName.LANGUAGE_SETTING,
-        icon = Icons.Default.Language
-    )
 
     data object DarkMode : Screens(
         title = R.string.darkMode,
-        route = EScreenName.LANGUAGE_SETTING,
+        route = EScreenName.LANGUAGE,
         icon = Icons.Default.DarkMode,
         isToggle = true
     )
@@ -95,7 +89,6 @@ val MENU_SCREENS = listOf(
     Screens.Delivery,
     Screens.HistoriesOrder,
     Screens.Settings,
-    Screens.LanguageSetting,
     Screens.DarkMode
 )
 

@@ -24,11 +24,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.screens.auth.navigations.authGraph
-import com.example.compose_ui.ui.screens.features.favorites.navigations.favoriteGraph
-import com.example.compose_ui.ui.screens.features.home.navigations.homeGraph
-import com.example.compose_ui.ui.screens.features.notifications.navigations.notificationGraph
-import com.example.compose_ui.ui.screens.features.orders.navigations.orderGraph
-import com.example.compose_ui.ui.screens.features.profile.navigations.profileGraph
+import com.example.compose_ui.ui.screens.features.menus.deliveries.navigations.deliveriesGraph
+import com.example.compose_ui.ui.screens.features.menus.histories.navigations.historiesGraph
+import com.example.compose_ui.ui.screens.features.menus.settings.navigations.settingGraph
+import com.example.compose_ui.ui.screens.features.tabs.favorites.navigations.favoriteGraph
+import com.example.compose_ui.ui.screens.features.tabs.home.navigations.homeGraph
+import com.example.compose_ui.ui.screens.features.tabs.home.notifications.navigations.notificationGraph
+import com.example.compose_ui.ui.screens.features.tabs.orders.navigations.orderGraph
+import com.example.compose_ui.ui.screens.features.tabs.profile.navigations.profileGraph
 import com.example.compose_ui.ui.screens.intro.navigations.introGraph
 import com.example.compose_ui.ui.theme.bgPage
 import com.example.compose_ui.ui.theme.primaryColor
@@ -80,7 +83,7 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
     }
 
     val view = LocalView.current
-    val color: Color = (if (enableDarkMode.value) primaryColor else bgPage)
+    val color: Color = (if (enableDarkMode.value || drawerState.isOpen) primaryColor else bgPage)
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -101,14 +104,18 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     AppBottomTabs(navController = navHostController, isVisibleBottomTab.value)
                 }
             ) { padding ->
-                SideEffect {
+
+                fun setSystemBarColor(color: Color) {
                     val window = (view.context as Activity).window
-                    window.statusBarColor =
+                    window.statusBarColor = color.toArgb()
+                }
+
+                if (!drawerState.isOpen) SideEffect {
+                    setSystemBarColor(
                         if (navBackStackEntry?.getCurrentRoute() == getScreenName(EScreenName.HOME)) {
-                            primaryColor.toArgb()
-                        } else {
-                            color.toArgb()
-                        }
+                            primaryColor
+                        } else color
+                    )
                 }
 
                 NavHost(
@@ -119,6 +126,7 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                 ) {
                     introGraph(navHostController)
                     authGraph(navHostController)
+
                     homeGraph(navHostController) {
                         openMenu()
                     }
@@ -126,6 +134,16 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     orderGraph(navHostController)
                     notificationGraph(navHostController)
                     profileGraph(navHostController)
+
+                    historiesGraph(navHostController)
+                    deliveriesGraph(navHostController) {
+                        setSystemBarColor(primaryColor)
+                        openMenu()
+                    }
+                    settingGraph(navHostController) {
+                        setSystemBarColor(primaryColor)
+                        openMenu()
+                    }
                 }
             }
         }

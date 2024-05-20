@@ -53,6 +53,7 @@ fun ContainerPage(
     onActionClick: () -> Unit = {},
     isBack: Boolean = true,
     bgColor: Color? = null,
+    isMenu: Boolean = false,
     uiState: UIState = UIState(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -81,7 +82,8 @@ fun ContainerPage(
                 },
                 iconAction = iconAction,
                 onActionClick = onActionClick,
-                isBack = isBack
+                isBack = isBack,
+                isMenu = isMenu
             )
         },
         containerColor = if (uiState.isLoading) bgLoadingColor else bgColor

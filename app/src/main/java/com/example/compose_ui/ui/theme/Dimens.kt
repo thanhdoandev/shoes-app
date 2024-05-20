@@ -12,6 +12,7 @@ val size_10 = 10.dp
 val size_12 = 12.dp
 val size_16 = 16.dp
 val size_20 = 20.dp
+val size_22 = 22.dp
 val size_28 = 28.dp
 val size_24 = 24.dp
 val size_30 = 30.dp

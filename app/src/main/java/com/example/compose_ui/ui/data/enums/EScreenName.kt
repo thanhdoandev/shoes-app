@@ -30,11 +30,19 @@ enum class EScreenName(val screenName: String) {
     PROFILE_ROUTE("Profile_route"),
     PROFILE("Profile"),
 
-    SETTING_ROUTER("setting_router"),
-    SETTINGS("setting"),
+    SETTING_ROUTER("menu/settings"),
+    SETTINGS("menu/settings/screen"),
+    LANGUAGE("menu/settings/language"),
+    PRIVACY_SECURITY("menu/settings/privacy"),
+    HELP("menu/settings/help"),
+    SUPPORT("menu/settings/support"),
+    ABOUT("menu/settings/menu"),
 
-    ORDER_DELIVERY("ORDER_DELIVERY"),
-    LANGUAGE_SETTING("language/setting")
+    HISTORY_ROUTE("menu/histories"),
+    HISTORY("menu/histories/screen"),
+
+    DELIVERY_ROUTER("menu/delivery"),
+    DELIVERY("menu/delivery/screen"),
     ;
 
     companion object {

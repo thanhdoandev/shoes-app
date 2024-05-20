@@ -2,16 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="BottomSheetDialogPreview">
+        <State />
+      </entry>
+      <entry key="DropDownElementPreview">
+        <State />
+      </entry>
       <entry key="MenuBarsPreview">
         <State />
       </entry>
       <entry key="MicroAnimationPreview">
-        <State />
-      </entry>
-      <entry key="ProductCardRowPreview">
-        <State />
-      </entry>
-      <entry key="SearchLoadingScreenPreview">
         <State />
       </entry>
       <entry key="SearchScreenMicroPhonePreview">
@@ -19,19 +19,6 @@
       </entry>
       <entry key="app">
         <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="R58M30R3Q4Y" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-13T08:36:56.205850Z" />
-          <multipleDevicesSelectedInDropDown value="true" />
           <targetsSelectedWithDialog>
             <Target>
               <type value="QUICK_BOOT_TARGET" />

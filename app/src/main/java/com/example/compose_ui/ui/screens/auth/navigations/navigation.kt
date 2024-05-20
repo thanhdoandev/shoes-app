@@ -13,8 +13,8 @@ import com.example.compose_ui.ui.screens.auth.login.Login
 import com.example.compose_ui.ui.screens.auth.login.LoginViewModel
 import com.example.compose_ui.ui.screens.auth.register.Register
 import com.example.compose_ui.ui.screens.auth.register.RegisterViewModels
-import com.example.compose_ui.ui.screens.features.home.Home
-import com.example.compose_ui.ui.screens.features.home.HomeViewModel
+import com.example.compose_ui.ui.screens.features.tabs.home.Home
+import com.example.compose_ui.ui.screens.features.tabs.home.HomeViewModel
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
     navigation(

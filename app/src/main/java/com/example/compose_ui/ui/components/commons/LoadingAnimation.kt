@@ -10,8 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.compose_ui.ui.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.animatedGradient
+import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.bgLoadingColor
+import com.example.compose_ui.ui.theme.none
 
 @Composable
 fun LoadingAnimation(
@@ -19,10 +22,12 @@ fun LoadingAnimation(
     containerColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     height: Dp = 220.dp,
     width: Dp = 180.dp,
-    border: Dp = 16.dp
+    border: Dp = 16.dp,
+    mHoz: Dp = none
 ) {
     Box(
         modifier = Modifier
+            .modifierMargin(Margin(mHoz = mHoz))
             .height(height)
             .width(width)
             .animatedGradient(
