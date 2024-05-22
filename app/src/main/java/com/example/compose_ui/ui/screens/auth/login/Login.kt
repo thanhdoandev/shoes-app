@@ -27,6 +27,7 @@ import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
 import com.example.compose_ui.ui.data.enums.EFieldType
+import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
 import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_28
@@ -36,7 +37,6 @@ import com.example.compose_ui.ui.theme.size_48
 import com.example.compose_ui.ui.theme.size_50
 import com.example.compose_ui.ui.theme.size_6
 import com.example.compose_ui.ui.theme.size_80
-
 
 @Composable
 fun Login(
@@ -80,7 +80,9 @@ private fun LoginScreen(
         JPCard(
             roundTopStart = size_28,
             roundTopEnd = size_28,
-            isMaxSize = true
+            isMaxSize = true,
+            contentColor = Color.White,
+            bgColor = primaryColor
         ) {
             JPColumn(Modifier.verticalScroll(rememberScrollState())) {
                 JPText(

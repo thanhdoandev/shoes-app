@@ -59,7 +59,7 @@
     <string name="settingLabel">Settings</string>
     <string name="homeLabel">Home</string>
     <string name="orderDeliveryLabel">Order Delivery</string>
-    <string name="historyOrder">History Order</string>
+    <string name="historyOrder">History Orders</string>
     <string name="darkMode">Dark Theme</string>
     <string name="logoutButton">Log out</string>
 
@@ -68,4 +68,8 @@
     <string name="settingPrivacyAndSecurity">Privacy &amp; Security</string>
     <string name="settingSupport">Support</string>
     <string name="settingAbout">About</string>
+
+    <!--Delivery-->
+    <string name="deliverPriceLabel">Price: %s</string>
+    <string name="deliverTitle">Orders Delivery</string>
 </resources>

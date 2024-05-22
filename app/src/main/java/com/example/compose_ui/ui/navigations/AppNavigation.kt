@@ -1,6 +1,7 @@
 package com.example.compose_ui.ui.navigations
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -94,7 +95,9 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                 navBackStackEntry = navBackStackEntry,
                 onClickItem = {
                     closeMenu()
-                    navHostController.pushToScreen(it)
+                    if (navBackStackEntry?.getCurrentRoute() != getScreenName(it)) {
+                        navHostController.startNewDestination(it, isSaveSate = false)
+                    }
                 }) {
                 enableDarkMode.value = !enableDarkMode.value
             }
@@ -110,12 +113,17 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     window.statusBarColor = color.toArgb()
                 }
 
-                if (!drawerState.isOpen) SideEffect {
+                SideEffect {
                     setSystemBarColor(
                         if (navBackStackEntry?.getCurrentRoute() == getScreenName(EScreenName.HOME)) {
                             primaryColor
                         } else color
                     )
+                }
+
+                fun openMenuFromSideBar() {
+                    setSystemBarColor(primaryColor)
+                    openMenu()
                 }
 
                 NavHost(
@@ -135,14 +143,14 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     notificationGraph(navHostController)
                     profileGraph(navHostController)
 
-                    historiesGraph(navHostController)
+                    historiesGraph(navHostController) {
+                        openMenuFromSideBar()
+                    }
                     deliveriesGraph(navHostController) {
-                        setSystemBarColor(primaryColor)
-                        openMenu()
+                        openMenuFromSideBar()
                     }
                     settingGraph(navHostController) {
-                        setSystemBarColor(primaryColor)
-                        openMenu()
+                        openMenuFromSideBar()
                     }
                 }
             }

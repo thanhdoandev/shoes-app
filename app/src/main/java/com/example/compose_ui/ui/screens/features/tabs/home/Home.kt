@@ -85,7 +85,9 @@ private fun HomeScreen(
             roundBottomStart = size_16,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(200.dp),
+            contentColor = Color.White,
+            bgColor = primaryColor
         ) {
             ConstraintLayout(
                 Modifier
@@ -171,7 +173,6 @@ private fun HomeScreen(
                 }
             }
             CategoriesTitle(title = R.string.homeNewArrivals, actionTitle = R.string.homeSeeAll) {
-
             }
             JPSpacer(h = size_6)
             BannerCard()

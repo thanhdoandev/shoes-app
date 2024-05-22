@@ -53,28 +53,27 @@ sealed class Screens(
 ) {
     data object Home : Screens(
         title = R.string.homeNameTab,
-        route = EScreenName.HOME_ROUTE,
+        route = EScreenName.HOME,
         icon = Icons.Default.Home,
     )
 
     data object Settings : Screens(
         title = R.string.settingLabel,
-        route = EScreenName.SETTING_ROUTER,
+        route = EScreenName.SETTINGS,
         icon = Icons.Default.Settings
     )
 
     data object Delivery : Screens(
         title = R.string.orderDeliveryLabel,
-        route = EScreenName.DELIVERY_ROUTER,
+        route = EScreenName.DELIVERY,
         icon = Icons.Default.DeliveryDining,
     )
 
     data object HistoriesOrder : Screens(
         title = R.string.historyOrder,
-        route = EScreenName.HISTORY_ROUTE,
+        route = EScreenName.HISTORY,
         icon = Icons.Default.History
     )
-
 
     data object DarkMode : Screens(
         title = R.string.darkMode,
@@ -188,7 +187,7 @@ private fun MenuHeaderPreview() {
 fun MenuContent(
     isDarkMode: Boolean = false,
     navBackStackEntry: NavBackStackEntry?,
-    onClickItem: (router: EScreenName) -> Unit,
+    onClickItem: (route: EScreenName) -> Unit,
     onSwitch: (isChecked: Boolean) -> Unit
 ) {
     ModalDrawerSheet(

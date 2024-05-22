@@ -8,7 +8,7 @@ import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.screens.features.menus.histories.histories.Histories
 
-fun NavGraphBuilder.historiesGraph(navController: NavHostController) {
+fun NavGraphBuilder.historiesGraph(navController: NavHostController, onOpenMenu: () -> Unit) {
     navigation(
         startDestination = getScreenName(EScreenName.HISTORY),
         route = getScreenName(EScreenName.HISTORY_ROUTE)
@@ -17,7 +17,9 @@ fun NavGraphBuilder.historiesGraph(navController: NavHostController) {
             composable(route = getScreenName(screen.route)) {
                 when (screen.route) {
                     EScreenName.HISTORY -> {
-                        Histories()
+                        Histories {
+                            onOpenMenu()
+                        }
                     }
 
                     else -> {

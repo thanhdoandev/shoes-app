@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
-import com.example.compose_ui.ui.screens.features.menus.deliveries.orderDelivery.Deliveries
+import com.example.compose_ui.ui.screens.features.menus.deliveries.orders.Deliveries
 
 fun NavGraphBuilder.deliveriesGraph(navController: NavHostController, onOpenMenu: () -> Unit) {
     navigation(

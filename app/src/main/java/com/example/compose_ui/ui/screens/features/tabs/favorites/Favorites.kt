@@ -25,15 +25,6 @@ fun Favorites(
         viewModel.getFavorites()
     }
     ContainerPage(title = "Favorites", isBack = false) {
-        LinearProgressIndicator(
-            color = bgPage,
-            trackColor = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-
-        )
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

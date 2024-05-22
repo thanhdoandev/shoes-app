@@ -10,11 +10,11 @@ fun NavController.pushToScreen(route: EScreenName, navOptions: NavOptions? = nul
     navigate(EScreenName.getScreenName(route), navOptions)
 }
 
-fun NavController.startNewDestination(route: EScreenName) {
+fun NavController.startNewDestination(route: EScreenName, isSaveSate: Boolean = true) {
     navigate(EScreenName.getScreenName(route)) {
         popUpTo(graph.findStartDestination().id) {
             inclusive = true
-            saveState = true
+            saveState = isSaveSate
         }
         launchSingleTop = true
         restoreState = true
