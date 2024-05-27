@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -23,10 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.theme.CustomComposeTheme
+import com.example.compose_ui.ui.theme.font_22
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.size_20
 import com.example.compose_ui.ui.theme.size_6
@@ -39,6 +40,7 @@ fun AppTopBar(
     onBackScreen: () -> Unit,
     iconAction: ImageVector? = null,
     isBack: Boolean = true,
+    isMenu: Boolean = false,
     onActionClick: () -> Unit? = {},
 ) {
     AnimatedVisibility(
@@ -64,7 +66,7 @@ fun AppTopBar(
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                            fontSize = font_22
                         ),
                         isCenter = true
                     )
@@ -72,11 +74,11 @@ fun AppTopBar(
                 navigationIcon = {
                     if (isBack) IconButton(onClick = { onBackScreen() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = if (isMenu) Icons.Filled.Menu else Icons.Filled.ArrowBack,
                             contentDescription = "",
                             modifier = Modifier.size(32.dp)
                         )
-                    }
+                    } else IconButton(onClick = { /*TODO*/ }, enabled = false) {}
                 },
                 actions = {
                     iconAction?.let {

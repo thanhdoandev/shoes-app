@@ -28,6 +28,7 @@ import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
 import com.example.compose_ui.ui.data.enums.EFieldType
+import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
 import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_28
@@ -61,7 +62,9 @@ fun Register(
             JPCard(
                 isMaxSize = true,
                 roundTopStart = 28.dp,
-                roundTopEnd = 28.dp
+                roundTopEnd = 28.dp,
+                bgColor = primaryColor,
+                contentColor = Color.White
             ) {
                 JPText(
                     modifier = Modifier.fillMaxWidth(),

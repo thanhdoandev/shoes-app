@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 
+
 }
 
 android {
@@ -64,6 +65,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("com.google.android.material:material:1.12.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -83,6 +85,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51")
     kapt("com.google.dagger:hilt-android-compiler:2.51")
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
 //    /*Firebase store*/
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
@@ -92,6 +95,11 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth")
     implementation(kotlin("reflect"))
+
+    /*Maps*/
+    implementation("com.google.maps.android:maps-compose:5.0.1")
+    implementation ("com.google.maps.android:maps-compose-utils:5.0.1")
+    implementation ("com.google.maps.android:maps-compose-widgets:5.0.1")
 }
 
 

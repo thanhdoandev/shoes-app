@@ -10,13 +10,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.compose_ui.ui.theme.primaryColor
 
 @Composable
 fun JPCard(
@@ -30,10 +31,11 @@ fun JPCard(
     w: Dp = 0.dp,
     h: Dp = 0.dp,
     padding: Dp = 16.dp,
-    bgColor: Color = primaryColor,
-    contentColor: Color = Color.White,
+    bgColor: Color = MaterialTheme.colorScheme.background,
+    contentColor: Color = contentColorFor(MaterialTheme.colorScheme.background),
     isMaxSize: Boolean = false,
     onClick: () -> Unit = {},
+    isClickAble: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var newModifier = modifier
@@ -56,7 +58,7 @@ fun JPCard(
             bottomEnd = round ?: roundBottomEnd,
             bottomStart = round ?: roundBottomStart
         ),
-        modifier = newModifier.clickable {
+        modifier = newModifier.clickable(enabled = isClickAble) {
             onClick()
         },
         colors = CardDefaults.cardColors(

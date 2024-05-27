@@ -2,10 +2,9 @@ package com.example.compose_ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -16,10 +15,7 @@ import com.example.compose_ui.ui.theme.Compose_uiTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-
-    private val viewModel: MainActivityViewModel by viewModels()
-
+class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +25,7 @@ class MainActivity : ComponentActivity() {
             val enableDarkMode = rememberSaveable { mutableStateOf(isSystemDark) }
 
             Compose_uiTheme(darkTheme = enableDarkMode.value) {
-                AppNavigation(isSigned = viewModel.getIsSigned(), enableDarkMode = enableDarkMode)
+                AppNavigation(enableDarkMode = enableDarkMode)
             }
         }
     }

@@ -53,6 +53,7 @@ fun ContainerPage(
     onActionClick: () -> Unit = {},
     isBack: Boolean = true,
     bgColor: Color? = null,
+    isMenu: Boolean = false,
     uiState: UIState = UIState(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -81,7 +82,8 @@ fun ContainerPage(
                 },
                 iconAction = iconAction,
                 onActionClick = onActionClick,
-                isBack = isBack
+                isBack = isBack,
+                isMenu = isMenu
             )
         },
         containerColor = if (uiState.isLoading) bgLoadingColor else bgColor
@@ -107,6 +109,7 @@ fun ContainerPage(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it })
             ) {
+                focusManager.clearFocus()
                 Dialog(onDismissRequest = {
                     uiState.apply {
                         isLoading = false
@@ -141,6 +144,7 @@ fun ContainerPage(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it })
             ) {
+                focusManager.clearFocus()
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
