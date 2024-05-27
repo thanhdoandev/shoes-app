@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.components.commons
+package com.example.compose_ui.ui.components.commons.products
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,11 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPImage
-import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.data.vo.Product

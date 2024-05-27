@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_ui.ui.components.commons.LoadingAnimation
+import com.example.compose_ui.ui.components.commons.apps.LoadingAnimation
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText

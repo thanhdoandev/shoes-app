@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.components.commons
+package com.example.compose_ui.ui.components.commons.products
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.compose_ui.ui.components.commons.apps.LoadingAnimation
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPImage
@@ -38,7 +39,6 @@ import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
-import com.example.compose_ui.ui.theme.size_16
 import com.example.compose_ui.ui.theme.size_8
 import java.util.Random
 

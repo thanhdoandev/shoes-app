@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.components.commons
+package com.example.compose_ui.ui.components.commons.apps
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height

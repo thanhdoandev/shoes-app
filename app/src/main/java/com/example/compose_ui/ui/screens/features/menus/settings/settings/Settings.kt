@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.LocaleListCompat
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.commons.BottomSheetModal
+import com.example.compose_ui.ui.components.commons.apps.BottomSheetModal
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
@@ -86,35 +86,59 @@ val SETTING_ITEMS =
 
 @Composable
 fun Settings(onOpenMenu: () -> Unit) {
-    val languages: MutableList<DropDownItem> = mutableListOf(
-        DropDownItem(
-            id = "en",
-            displayName = stringResource(id = R.string.en)
-        ),
-        DropDownItem(
-            id = "vi",
-            displayName = stringResource(id = R.string.vi)
+    val languages: MutableList<DropDownItem> = rememberSaveable {
+        mutableListOf(
+            DropDownItem(
+                id = "en",
+                displayName = "English"
+            ),
+            DropDownItem(
+                id = "vi",
+                displayName = "Việt Nam"
+            ),
+            DropDownItem(
+                id = "zh",
+                displayName = "Chinese"
+            ),
+            DropDownItem(
+                id = "et",
+                displayName = "Estonian"
+            )
         )
-    )
+    }
+
     var currentLanguage by rememberSaveable {
         mutableStateOf("")
     }
 
     LaunchedEffect(Unit) {
         val language = androidx.compose.ui.text.intl.Locale.current
-        languages.firstOrNull { it.id == language.language }?.let {
-            currentLanguage = it.displayName
+        languages.firstOrNull { it.id == language.language }?.apply {
+            currentLanguage = displayName
+            isSelected = true
         }
     }
 
     fun changeLanguage(language: DropDownItem) {
         currentLanguage = language.displayName
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(language.id))
+        languages.forEach {
+            it.apply {
+                isSelected = it.id == language.id
+            }
+        }
     }
-    SettingScreen(
-        languages = languages,
-        currentLanguage = currentLanguage,
-        onChangeLanguage = { changeLanguage(it) }) { onOpenMenu() }
+
+    JPColumn(Modifier.fillMaxSize()) {
+        SettingScreen(
+            languages = languages,
+            currentLanguage = currentLanguage,
+            onChangeLanguage = {
+                changeLanguage(it)
+            }) {
+            onOpenMenu()
+        }
+    }
 }
 
 @Composable
@@ -169,7 +193,7 @@ private fun SettingScreen(
             items = languages,
             onClickItem = {
                 isLanguageSetting = false
-                onChangeLanguage(it)
+                if (it.displayName != currentLanguage) onChangeLanguage(it)
             }
         ) {
             isLanguageSetting = false

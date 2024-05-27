@@ -109,6 +109,7 @@ fun ContainerPage(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it })
             ) {
+                focusManager.clearFocus()
                 Dialog(onDismissRequest = {
                     uiState.apply {
                         isLoading = false
@@ -143,6 +144,7 @@ fun ContainerPage(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it })
             ) {
+                focusManager.clearFocus()
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

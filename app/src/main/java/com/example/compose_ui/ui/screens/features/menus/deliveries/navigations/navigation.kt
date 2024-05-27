@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.navigations.pushToScreen
+import com.example.compose_ui.ui.screens.features.menus.deliveries.maps.MapView
 import com.example.compose_ui.ui.screens.features.menus.deliveries.orders.Deliveries
 
 fun NavGraphBuilder.deliveriesGraph(navController: NavHostController, onOpenMenu: () -> Unit) {
@@ -17,9 +19,15 @@ fun NavGraphBuilder.deliveriesGraph(navController: NavHostController, onOpenMenu
             composable(route = getScreenName(screen.route)) {
                 when (screen.route) {
                     EScreenName.DELIVERY -> {
-                        Deliveries {
+                        Deliveries(onOpenMap = {
+                            navController.pushToScreen(EScreenName.MAP_VIEW)
+                        }) {
                             onOpenMenu()
                         }
+                    }
+
+                    EScreenName.MAP_VIEW -> {
+                        MapView()
                     }
 
                     else -> {

@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.commons.ProductCardRow
+import com.example.compose_ui.ui.components.commons.products.ProductCardRow
 import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPRow

@@ -23,6 +23,7 @@ import com.example.compose_ui.ui.data.vo.getProductPreview
 import com.example.compose_ui.ui.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.convertToDoubleDisplay
 import com.example.compose_ui.ui.extensions.modifierMargin
+import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.font_16
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryText
@@ -32,12 +33,15 @@ import com.example.compose_ui.ui.theme.size_2
 import com.example.compose_ui.ui.theme.size_32
 
 @Composable
-fun ProductDelivery(item: Product) {
+fun ProductDelivery(item: Product, onClickMapIcon: () -> Unit = {}, onClickItem: () -> Unit = {}) {
     item.apply {
         JPCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .modifierMargin(Margin(mHoz = size_1, mVer = size_1)),
+                .modifierMargin(Margin(mHoz = size_1, mVer = size_1))
+                .onClickNoEffect {
+                    onClickItem()
+                },
             bgColor = Color.White,
             contentColor = primaryText,
             round = size_16,
@@ -50,7 +54,12 @@ fun ProductDelivery(item: Product) {
                         modifier = Modifier.weight(1f),
                         style = MaterialTheme.typography.titleMedium
                     )
-                    JPIcon(icon = Icons.Default.Map, color = Color.Red, size = size_32)
+                    JPIcon(
+                        icon = Icons.Default.Map,
+                        color = Color.Red,
+                        size = size_32,
+                        onClick = onClickMapIcon
+                    )
                 }
                 JPText(text = name)
                 JPText(

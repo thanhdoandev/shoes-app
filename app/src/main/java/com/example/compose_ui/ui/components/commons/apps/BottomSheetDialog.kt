@@ -1,8 +1,9 @@
-package com.example.compose_ui.ui.components.commons
+package com.example.compose_ui.ui.components.commons.apps
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
@@ -58,7 +58,7 @@ fun BottomSheetModal(
     isSearch: Boolean = false,
     isCheckbox: Boolean = false,
     onClickItem: (item: DropDownItem) -> Unit = {},
-    onButtonAction: (items: MutableList<DropDownItem>) -> Unit = {},
+    onButtonAction: ((items: MutableList<DropDownItem>) -> Unit)? = null,
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -66,7 +66,11 @@ fun BottomSheetModal(
         mutableStateOf(mutableListOf())
     }
 
-    AnimatedVisibility(visible = isVisible) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it })
+    ) {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
             modifier = Modifier
@@ -107,13 +111,14 @@ fun BottomSheetModal(
                 }
 
             }
-            JPButton(
-                label = "Hello",
-                modifier = Modifier.align(Alignment.End),
-                mHoz = size_20
-            ) {
-                Log.i("xxxx___", itemSelected.toString())
-                onButtonAction(itemSelected)
+            onButtonAction?.let {
+                JPButton(
+                    label = "Hello",
+                    modifier = Modifier.align(Alignment.End),
+                    mHoz = size_20
+                ) {
+                    onButtonAction(itemSelected)
+                }
             }
             JPSpacer(h = size_20)
         }

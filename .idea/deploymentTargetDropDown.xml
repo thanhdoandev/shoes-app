@@ -5,13 +5,13 @@
       <entry key="BottomSheetDialogPreview">
         <State />
       </entry>
+      <entry key="ConfirmDialogPreview">
+        <State />
+      </entry>
       <entry key="DropDownElementPreview">
         <State />
       </entry>
-      <entry key="MenuBarsPreview">
-        <State />
-      </entry>
-      <entry key="MicroAnimationPreview">
+      <entry key="JPInputPreview">
         <State />
       </entry>
       <entry key="ProductDeliveryPreview">
@@ -19,7 +19,40 @@
       </entry>
       <entry key="app">
         <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_Pro_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-05-27T06:54:33.859493Z" />
+          <multipleDevicesSelectedInDropDown value="true" />
+          <runningDeviceTargetsSelectedWithDialog>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_Pro_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetsSelectedWithDialog>
           <targetsSelectedWithDialog>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_Pro_API_34_2.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
               <deviceKey>

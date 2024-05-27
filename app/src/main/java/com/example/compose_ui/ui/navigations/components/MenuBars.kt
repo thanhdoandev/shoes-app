@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.navigations
+package com.example.compose_ui.ui.navigations.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +35,8 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.extensions.onClickNoEffect
+import com.example.compose_ui.ui.navigations.getCurrentRoute
 import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.font_18
 import com.example.compose_ui.ui.theme.font_22
@@ -43,6 +45,7 @@ import com.example.compose_ui.ui.theme.size_100
 import com.example.compose_ui.ui.theme.size_32
 import com.example.compose_ui.ui.theme.size_6
 import com.example.compose_ui.ui.theme.size_60
+import com.example.compose_ui.ui.theme.size_80
 import com.example.compose_ui.ui.utils.getDeviceSize
 
 sealed class Screens(
@@ -188,7 +191,8 @@ fun MenuContent(
     isDarkMode: Boolean = false,
     navBackStackEntry: NavBackStackEntry?,
     onClickItem: (route: EScreenName) -> Unit,
-    onSwitch: (isChecked: Boolean) -> Unit
+    onSwitch: (isChecked: Boolean) -> Unit,
+    onLogout: () -> Unit = {},
 ) {
     ModalDrawerSheet(
         Modifier.width((getDeviceSize().width / 1.3).dp),
@@ -196,15 +200,32 @@ fun MenuContent(
         drawerContainerColor = CustomComposeTheme.appCustomColors.bgMenu
     ) {
         MenuHeader()
-        MENU_SCREENS.forEach { screen ->
-            val isSelected =
-                navBackStackEntry.getCurrentRoute() == EScreenName.getScreenName(screen.route)
-            MenuItem(
-                isDarkMode = isDarkMode,
-                screen = screen,
-                isSelected = isSelected,
-                onClick = onClickItem,
-                onSwitch = onSwitch
+        JPColumn(Modifier.weight(1f)) {
+            MENU_SCREENS.forEach { screen ->
+                val isSelected =
+                    navBackStackEntry.getCurrentRoute() == EScreenName.getScreenName(screen.route)
+                MenuItem(
+                    isDarkMode = isDarkMode,
+                    screen = screen,
+                    isSelected = isSelected,
+                    onClick = onClickItem,
+                    onSwitch = onSwitch
+                )
+            }
+        }
+        JPRow(
+            Modifier
+                .height(size_80)
+                .fillMaxWidth()
+                .background(primaryColor)
+                .onClickNoEffect { onLogout() },
+            isCenterHoz = true,
+            isCenterVer = true
+        ) {
+            JPText(
+                text = stringResource(id = R.string.logoutButton),
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = font_18),
+                color = Color.White
             )
         }
     }

@@ -23,3 +23,5 @@ val bgIntroColor = Color(0xFF1483C2)
 val bgLoadingColor = Color(0xFFB8B8B8)
 val bgHeaderDark = Color(121212)
 val colorUnlike = Color(0xFFB9D9D9)
+
+val errorColor = Color(0xFFB71C1C)

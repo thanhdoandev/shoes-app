@@ -1,6 +1,6 @@
 @file:Suppress("IMPLICIT_CAST_TO_ANY")
 
-package com.example.compose_ui.ui.navigations
+package com.example.compose_ui.ui.navigations.components
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.navigations.getCurrentRoute
 
 sealed class BottomTab(
     val route: EScreenName,

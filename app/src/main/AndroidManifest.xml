@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".ShoesApp"
@@ -18,10 +20,14 @@
         android:theme="@style/Theme.Compose_ui"
         tools:ignore="UnusedAttribute"
         tools:targetApi="tiramisu">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAHwINwwB1Qc_HBeaYqZI1SjwdxFxYlwe8" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Compose_ui">
+            android:theme="@style/Theme.Compose_ui"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

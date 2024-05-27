@@ -1,7 +1,6 @@
 package com.example.compose_ui.ui.navigations
 
 import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -11,6 +10,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,11 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.compose_ui.ui.data.enums.EScreenName
 import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.navigations.components.AppBottomTabs
+import com.example.compose_ui.ui.navigations.components.MenuContent
 import com.example.compose_ui.ui.screens.auth.navigations.authGraph
 import com.example.compose_ui.ui.screens.features.menus.deliveries.navigations.deliveriesGraph
 import com.example.compose_ui.ui.screens.features.menus.histories.navigations.historiesGraph
@@ -34,14 +37,21 @@ import com.example.compose_ui.ui.screens.features.tabs.home.notifications.naviga
 import com.example.compose_ui.ui.screens.features.tabs.orders.navigations.orderGraph
 import com.example.compose_ui.ui.screens.features.tabs.profile.navigations.profileGraph
 import com.example.compose_ui.ui.screens.intro.navigations.introGraph
+import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgPage
 import com.example.compose_ui.ui.theme.primaryColor
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
+fun AppNavigation(
+    enableDarkMode: MutableState<Boolean>,
+    viewModel: AppNavigationViewModel = AppNavigationViewModel(SavedStateHandle())
+) {
+    val isSigned by viewModel.isSigned.collectAsState()
+
     val isVisibleBottomTab = rememberSaveable { (mutableStateOf(false)) }
-    val isVisibleTopBar = rememberSaveable { mutableStateOf(false) }
+    val isMenuVisible = rememberSaveable { mutableStateOf(false) }
 
     val navHostController = rememberNavController()
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
@@ -54,7 +64,7 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
     when (navBackStackEntry?.getCurrentRoute()) {
         getScreenName(EScreenName.HOME) -> {
             isVisibleBottomTab.value = true
-            isVisibleTopBar.value = false
+            isMenuVisible.value = true
         }
 
         getScreenName(EScreenName.FAVORITES),
@@ -62,12 +72,18 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
         getScreenName(EScreenName.NOTIFICATIONS),
         getScreenName(EScreenName.PROFILE) -> {
             isVisibleBottomTab.value = true
-            isVisibleTopBar.value = true
+            isMenuVisible.value = false
+        }
+
+        getScreenName(EScreenName.HISTORY),
+        getScreenName(EScreenName.DELIVERY),
+        getScreenName(EScreenName.SETTINGS) -> {
+            isMenuVisible.value = true
         }
 
         else -> {
             isVisibleBottomTab.value = false
-            isVisibleTopBar.value = true
+            isMenuVisible.value = false
         }
     }
 
@@ -84,11 +100,13 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
     }
 
     val view = LocalView.current
-    val color: Color = (if (enableDarkMode.value || drawerState.isOpen) primaryColor else bgPage)
+    val color: Color =
+        (if (enableDarkMode.value && isSigned || drawerState.isOpen) primaryColor else if (enableDarkMode.value && !isSigned) CustomComposeTheme.appCustomColors.bgColor else bgPage)
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         modifier = Modifier.fillMaxSize(),
+        gesturesEnabled = isMenuVisible.value,
         drawerContent = {
             MenuContent(
                 isDarkMode = enableDarkMode.value,
@@ -98,9 +116,16 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     if (navBackStackEntry?.getCurrentRoute() != getScreenName(it)) {
                         navHostController.startNewDestination(it, isSaveSate = false)
                     }
-                }) {
-                enableDarkMode.value = !enableDarkMode.value
-            }
+                },
+                onLogout = {
+                    closeMenu()
+                    coroutineScope.launch(Dispatchers.IO) {
+                        viewModel.userLogout()
+                    }
+                },
+                onSwitch = {
+                    enableDarkMode.value = !enableDarkMode.value
+                })
         }, content = {
             Scaffold(
                 bottomBar = {
@@ -133,7 +158,11 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
                     modifier = Modifier.padding(padding),
                 ) {
                     introGraph(navHostController)
-                    authGraph(navHostController)
+                    authGraph(navHostController) {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            viewModel.userLoginSuccess()
+                        }
+                    }
 
                     homeGraph(navHostController) {
                         openMenu()
@@ -157,3 +186,4 @@ fun AppNavigation(isSigned: Boolean, enableDarkMode: MutableState<Boolean>) {
         }
     )
 }
+

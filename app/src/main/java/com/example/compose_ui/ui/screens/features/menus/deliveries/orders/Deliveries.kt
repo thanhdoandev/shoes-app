@@ -14,21 +14,21 @@ import com.example.compose_ui.ui.screens.features.menus.deliveries.components.Pr
 import com.example.compose_ui.ui.theme.size_16
 
 @Composable
-fun Deliveries(onOpenMenu: () -> Unit) {
-    DeliveryScreen {
+fun Deliveries(onOpenMap: () -> Unit, onOpenMenu: () -> Unit) {
+    DeliveryScreen(onOpenMap = onOpenMap) {
         onOpenMenu()
     }
 }
 
 @Composable
-private fun DeliveryScreen(onOpenMenu: () -> Unit = {}) {
+private fun DeliveryScreen(onOpenMap: () -> Unit = {}, onOpenMenu: () -> Unit = {}) {
     ContainerPage(
         stringResource(id = R.string.deliverTitle),
         isMenu = true,
         onBackScreen = onOpenMenu
     ) {
         LazyColumn(Modifier.modifierMargin(Margin(mVer = size_16, mHoz = size_16))) {
-            item { ProductDelivery(item = getProductPreview()) }
+            item { ProductDelivery(item = getProductPreview(), onClickMapIcon = onOpenMap) }
         }
     }
 }

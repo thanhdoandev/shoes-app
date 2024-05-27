@@ -43,6 +43,7 @@ enum class EScreenName(val screenName: String) {
 
     DELIVERY_ROUTER("menu/delivery"),
     DELIVERY("menu/delivery/screen"),
+    MAP_VIEW("menu/delivery/maps")
     ;
 
     companion object {

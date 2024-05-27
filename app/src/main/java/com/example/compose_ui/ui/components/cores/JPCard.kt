@@ -35,6 +35,7 @@ fun JPCard(
     contentColor: Color = contentColorFor(MaterialTheme.colorScheme.background),
     isMaxSize: Boolean = false,
     onClick: () -> Unit = {},
+    isClickAble: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var newModifier = modifier
@@ -57,7 +58,7 @@ fun JPCard(
             bottomEnd = round ?: roundBottomEnd,
             bottomStart = round ?: roundBottomStart
         ),
-        modifier = newModifier.clickable {
+        modifier = newModifier.clickable(enabled = isClickAble) {
             onClick()
         },
         colors = CardDefaults.cardColors(

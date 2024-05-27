@@ -36,7 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
 import com.example.compose_ui.ui.components.bases.UIState
-import com.example.compose_ui.ui.components.commons.ProductCard
+import com.example.compose_ui.ui.components.commons.products.ProductCard
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPExText

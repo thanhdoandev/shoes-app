@@ -24,8 +24,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.BannerCard
-import com.example.compose_ui.ui.components.commons.ProductCard
 import com.example.compose_ui.ui.components.commons.apps.SearchInput
+import com.example.compose_ui.ui.components.commons.products.ProductCard
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
@@ -152,9 +152,8 @@ private fun HomeScreen(
                 }
             }
         }
-        CategoriesTitle(title = R.string.homeCategories) {}
         JPColumn(Modifier.verticalScroll(rememberScrollState())) {
-            JPSpacer(h = size_20)
+            CategoriesTitle(title = R.string.homeCategories) {}
             LazyRow(Modifier.padding(none, size_8)) {
                 items(if (isLoadingCategories) 5 else categories.size) {
                     Category(

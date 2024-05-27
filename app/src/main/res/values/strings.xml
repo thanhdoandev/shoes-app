@@ -22,6 +22,11 @@
     <string name="loginWithGoogleButton">Login with Google</string>
     <string name="loginNewUser">New User?</string>
     <string name="loginCreateAccount">Create Account</string>
+    <string name="loginEmailRequired">Email is required filed.</string>
+    <string name="loginEmailInvalid">Email is invalid</string>
+    <string name="loginPasswordRequired">Password is required field</string>
+    <string name="loginPasswordInvalid">Password is valid</string>
+    <string name="loginLessPassword">The password needs to consist of at least 8 characters</string>
 
     <string name="registerTitle">Register Account</string>
     <string name="registerAlreadyAccount">Already Have Account?</string>
@@ -68,8 +73,15 @@
     <string name="settingPrivacyAndSecurity">Privacy &amp; Security</string>
     <string name="settingSupport">Support</string>
     <string name="settingAbout">About</string>
+    <string name="settingLanguageConfirm">Do you want to change language to %s?</string>
 
     <!--Delivery-->
     <string name="deliverPriceLabel">Price: %s</string>
     <string name="deliverTitle">Orders Delivery</string>
+    <string name="deliveryTrackingOrders">Tracking Order</string>
+
+    <string name="btnLabelNo">No</string>
+    <string name="btnLabelYes">Yes</string>
+    <string name="settingLanguageChangeTitle">Language Change</string>
+    <string name="fieldRequired">The %s is required field.</string>
 </resources>
