@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name" translatable="false">Shoes App</string>
+
+    <string name="en" translatable="false">English</string>
+    <string name="vi" translatable="false">Tiếng Việt</string>
+    <string name="homeNameTab">Home</string>
+    <string name="favoriteNameTab">Favorites</string>
+    <string name="profileNameTab">Profile</string>
+    <string name="orderNameTab">Favorites</string>
+    <string name="notificationNameTab">Notification</string>
+
+    <!--Intro-->
+    <string name="introButtonLabel">Get Started</string>
+
+    <!--AUTH-->
+    <string name="emailLabel">Email Address</string>
+    <string name="passwordLabel">Password</string>
+    <string name="loginTitle">Hello Again!</string>
+    <string name="loginDesc">Fill your details or continue with social media</string>
+    <string name="loginRecoveryPassword">Recovery Password</string>
+    <string name="loginButton">Login</string>
+    <string name="loginWithGoogleButton">Login with Google</string>
+    <string name="loginNewUser">New User\?</string>
+    <string name="loginCreateAccount">Create Account</string>
+    <string name="loginEmailRequired">Email is required filed.</string>
+    <string name="loginEmailInvalid">Email is invalid</string>
+    <string name="loginPasswordRequired">Password is required field</string>
+    <string name="loginPasswordInvalid">Password is valid</string>
+    <string name="loginLessPassword">The password needs to consist of at least 8 characters</string>
+
+    <string name="registerTitle">Register Account</string>
+    <string name="registerAlreadyAccount">Already Have Account\?</string>
+    <string name="registerLogin">Log In</string>
+    <string name="registerYourName">Your Name *</string>
+    <string name="registerButton">Register</string>
+
+    <!--Home-->
+    <string name="homeExplore">Explore</string>
+    <string name="homeCategories">Select Category</string>
+    <string name="homeSeeAll">See All</string>
+    <string name="homeAllShoes">All Shoes</string>
+    <string name="homeOutdoor">Outdoor</string>
+    <string name="homeTennis">Tennis</string>
+    <string name="homePopularShoes">Popular Shoes</string>
+    <string name="homeNewArrivals">New Arrivals</string>
+
+    <string name="placeholderField">Please enter your %s</string>
+
+    <!--Detail-->
+    <string name="detail">Detail</string>
+    <string name="productRelated">Related products</string>
+    <string name="addToCart">Add to Cart</string>
+
+    <!--Search-->
+    <string name="searchLabel">Search</string>
+    <string name="searchHint">Search your shoes</string>
+    <string name="shoesLabel">Shoes</string>
+
+    <!--Commons-->
+    <string name="nextLabelButton">Next</string>
+    <string name="cancelLabel">Cancel</string>
+
+    <!--Menu-->
+    <string name="settingLabel">Settings</string>
+    <string name="homeLabel">Home</string>
+    <string name="orderDeliveryLabel">Order Delivery</string>
+    <string name="historyOrder">History Orders</string>
+    <string name="darkMode">Dark Theme</string>
+    <string name="logoutButton">Log out</string>
+
+    <!--Settings-->
+    <string name="settingLanguage">Language</string>
+    <string name="settingPrivacyAndSecurity"><![CDATA[Privacy & Security]]></string>
+    <string name="settingSupport">Support</string>
+    <string name="settingAbout">About</string>
+    <string name="settingLanguageConfirm">Do you want to change language to %s\?</string>
+
+    <!--Delivery-->
+    <string name="deliverPriceLabel">Price: %s</string>
+    <string name="deliverTitle">Orders Delivery</string>
+    <string name="deliveryTrackingOrders">Tracking Order</string>
+
+    <string name="btnLabelNo">No</string>
+    <string name="btnLabelYes">Yes</string>
+    <string name="settingLanguageChangeTitle">Language Change</string>
+    <string name="fieldRequired">The %s is required field.</string>
+</resources>

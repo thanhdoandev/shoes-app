@@ -39,6 +39,7 @@ import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.Loading
+import com.example.compose_ui.ui.extensions.getStringValue
 import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgLoadingColor
@@ -63,7 +64,7 @@ fun ContainerPage(
     }
 
     LaunchedEffect(uiState) {
-        if (uiState.copy().errorMessage.isNotEmpty()) {
+        if (!uiState.copy().errorMessage.isNullOrEmpty()) {
             isVisibleDialogError = true
         }
     }
@@ -131,7 +132,7 @@ fun ContainerPage(
                                 style = MaterialTheme.typography.titleMedium
                             )
                             JPText(
-                                text = uiState.errorMessage,
+                                text = uiState.errorMessage.getStringValue(),
                                 color = Color.Black,
                                 mTop = size_8
                             )

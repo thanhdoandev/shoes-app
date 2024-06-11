@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name" translatable="false">Shoes App</string>
+
+    <string name="en" translatable="false">English</string>
+    <string name="vi" translatable="false">Tiếng Việt</string>
+    <string name="homeNameTab">Trang chủ</string>
+    <string name="favoriteNameTab">Yêu thích</string>
+    <string name="profileNameTab">Hồ sơ</string>
+    <string name="orderNameTab">Yêu thích</string>
+    <string name="notificationNameTab">Thông báo</string>
+
+    <!--Intro-->
+    <string name="introButtonLabel">Bắt đầu</string>
+
+    <!--AUTH-->
+    <string name="emailLabel">Địa chỉ email</string>
+    <string name="passwordLabel">Mật khẩu</string>
+    <string name="loginTitle">Xin chào lần nữa!</string>
+    <string name="loginDesc">Điền thông tin chi tiết của bạn hoặc tiếp tục với phương tiện truyền thông xã hội</string>
+    <string name="loginRecoveryPassword">Khôi phục mật khẩu</string>
+    <string name="loginButton">Đăng nhập</string>
+    <string name="loginWithGoogleButton">Đăng nhập bằng Google</string>
+    <string name="loginNewUser">Người dùng mới\?</string>
+    <string name="loginCreateAccount">Tạo tài khoản</string>
+    <string name="loginEmailRequired">Email là bắt buộc phải nộp.</string>
+    <string name="loginEmailInvalid">Email không hợp lệ</string>
+    <string name="loginPasswordRequired">Password bắt buộc phải nhập mật khẩu</string>
+    <string name="loginPasswordInvalid">Mật khẩu không hợp lệ</string>
+    <string name="loginLessPassword">Mật khẩu cần phải bao gồm ít nhất 8 ký tự</string>
+
+    <string name="registerTitle">đăng ký tài khoản</string>
+    <string name="registerAlreadyAccount">Đã có tài khoản\?</string>
+    <string name="registerLogin">Đăng nhập</string>
+    <string name="registerYourName">Tên của bạn *</string>
+    <string name="registerButton">Đăng ký</string>
+
+    <!--Home-->
+    <string name="homeExplore">Khám phá</string>
+    <string name="homeCategories">Chọn danh mục</string>
+    <string name="homeSeeAll">Nhìn thấy tất cả</string>
+    <string name="homeAllShoes">Tất cả giày</string>
+    <string name="homeOutdoor">Ngoài trời</string>
+    <string name="homeTennis">quần vợt</string>
+    <string name="homePopularShoes">Giày phổ biến</string>
+    <string name="homeNewArrivals">Điểm đến mới</string>
+
+    <string name="placeholderField">Vui lòng nhập %s của bạn</string>
+
+    <!--Detail-->
+    <string name="detail">Chi tiết</string>
+    <string name="productRelated">Những sảm phẩm tương tự</string>
+    <string name="addToCart">Thêm vào giỏ hàng</string>
+
+    <!--Search-->
+    <string name="searchLabel">Tìm kiếm</string>
+    <string name="searchHint">Tìm kiếm giày của bạn</string>
+    <string name="shoesLabel">Đôi giày</string>
+
+    <!--Commons-->
+    <string name="nextLabelButton">Kế tiếp</string>
+    <string name="cancelLabel">Hủy bỏ</string>
+
+    <!--Menu-->
+    <string name="settingLabel">Cài đặt</string>
+    <string name="homeLabel">Trang chủ</string>
+    <string name="orderDeliveryLabel">Lệnh giao hàng</string>
+    <string name="historyOrder">Lịch sử đơn đặt hàng</string>
+    <string name="darkMode">Chủ đề tối</string>
+    <string name="logoutButton">Đăng xuất</string>
+
+    <!--Settings-->
+    <string name="settingLanguage">Ngôn ngữ</string>
+    <string name="settingPrivacyAndSecurity"><![CDATA[Quyền riêng tư & Bảo mật]]></string>
+    <string name="settingSupport">Ủng hộ</string>
+    <string name="settingAbout">Về</string>
+    <string name="settingLanguageConfirm">Bạn có muốn thay đổi ngôn ngữ thành %s không\?</string>
+
+    <!--Delivery-->
+    <string name="deliverPriceLabel">Giá: %s</string>
+    <string name="deliverTitle">Đơn hàng giao hàng</string>
+    <string name="deliveryTrackingOrders">Theo dõi đơn hàng</string>
+
+    <string name="btnLabelNo">KHÔNG</string>
+    <string name="btnLabelYes">Đúng</string>
+    <string name="settingLanguageChangeTitle">Thay đổi ngôn ngữ</string>
+    <string name="fieldRequired">%s Là trường bắt buộc</string>
+</resources>
