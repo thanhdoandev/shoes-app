@@ -4,9 +4,9 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.compose_ui.ui.data.vo.Category
-import com.example.compose_ui.ui.data.vo.Person
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.Category
+import com.example.compose_ui.ui.cores.data.vo.Person
+import com.example.compose_ui.ui.cores.data.vo.Product
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -26,13 +26,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class UIState(var isLoading: Boolean = false, var message: String = "")
+data class UiState(
+    var isLoading: Boolean = false,
+    var errorMessage: String? = null
+)
 
 @HiltViewModel
 open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val database: FirebaseFirestore = Firebase.firestore
     private val auth: FirebaseAuth = Firebase.auth
-    private var _uiState = MutableStateFlow(UIState())
+    private var _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
     companion object {
@@ -49,7 +52,7 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
         _uiState.update {
             it.copy().apply {
                 isLoading = boolean
-                message = string.toString()
+                errorMessage = string.toString()
             }
         }
     }
@@ -66,6 +69,7 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
                 resetState(false)
             }.addOnFailureListener {
                 resetState(false, it.message)
+                onFinish(false)
             }
         } catch (e: Exception) {
             resetState(false, e.message)

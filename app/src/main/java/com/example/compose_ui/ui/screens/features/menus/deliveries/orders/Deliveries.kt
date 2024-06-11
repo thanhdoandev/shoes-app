@@ -7,8 +7,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.data.vo.getProductPreview
-import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.cores.data.vo.getProductPreview
+import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.screens.features.menus.deliveries.components.ProductDelivery
 import com.example.compose_ui.ui.theme.size_16

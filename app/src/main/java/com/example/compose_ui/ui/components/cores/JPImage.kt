@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
-import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.none
 

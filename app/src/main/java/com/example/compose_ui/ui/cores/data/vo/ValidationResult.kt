@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.data.vo
+package com.example.compose_ui.ui.cores.data.vo
 
 import com.example.compose_ui.ui.utils.UiText
 

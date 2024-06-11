@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.data.vo
+package com.example.compose_ui.ui.cores.data.vo
 
 data class Category(
     val description: String,

@@ -3,7 +3,7 @@ package com.example.compose_ui.ui.screens.features.tabs.home.ui.seach
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.compose_ui.ui.components.bases.BaseViewModel
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.Product
 import com.example.compose_ui.ui.utils.Constants.Default.DELAY_SEARCH
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview

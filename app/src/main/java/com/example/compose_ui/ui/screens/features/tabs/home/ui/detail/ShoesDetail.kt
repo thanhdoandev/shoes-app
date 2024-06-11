@@ -35,7 +35,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.bases.UIState
+import com.example.compose_ui.ui.components.bases.UiState
 import com.example.compose_ui.ui.components.commons.products.ProductCard
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -46,8 +46,8 @@ import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.Product
-import com.example.compose_ui.ui.data.vo.getProductPreview
+import com.example.compose_ui.ui.cores.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.getProductPreview
 import com.example.compose_ui.ui.extensions.convertToDoubleDisplay
 import com.example.compose_ui.ui.screens.features.tabs.home.components.CategoriesTitle
 import com.example.compose_ui.ui.theme.colorUnlike
@@ -88,7 +88,7 @@ fun ShoesDetail(
 
 @Composable
 private fun ShoesDetailScreen(
-    uiState: UIState,
+    uiState: UiState,
     shoes: Product?,
     similarShoes: MutableList<Product> = mutableListOf(),
     isLoading: Boolean = false,
@@ -219,13 +219,13 @@ private fun ShoesDetailScreen(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun PreviewLoading() {
-    ShoesDetailScreen(uiState = UIState(isLoading = true), shoes = getProductPreview()) {
+    ShoesDetailScreen(uiState = UiState(isLoading = true), shoes = getProductPreview()) {
     }
 }
 
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 fun ShoesDetailPreview() {
-    ShoesDetailScreen(uiState = UIState(), shoes = getProductPreview()) {
+    ShoesDetailScreen(uiState = UiState(), shoes = getProductPreview()) {
     }
 }

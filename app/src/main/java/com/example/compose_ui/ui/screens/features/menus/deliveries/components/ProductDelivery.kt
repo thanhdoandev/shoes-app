@@ -18,9 +18,9 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.Product
-import com.example.compose_ui.ui.data.vo.getProductPreview
-import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.cores.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.getProductPreview
+import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.convertToDoubleDisplay
 import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.extensions.onClickNoEffect

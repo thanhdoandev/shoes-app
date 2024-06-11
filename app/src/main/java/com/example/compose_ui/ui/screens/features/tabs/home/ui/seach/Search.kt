@@ -29,7 +29,7 @@ import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.Loading
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.Product
 import com.example.compose_ui.ui.screens.features.tabs.home.ui.seach.components.HistorySearch
 import com.example.compose_ui.ui.screens.features.tabs.home.ui.seach.components.MicroAnimation
 import com.example.compose_ui.ui.theme.none

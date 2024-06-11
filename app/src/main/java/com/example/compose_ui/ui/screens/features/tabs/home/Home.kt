@@ -1,5 +1,6 @@
 package com.example.compose_ui.ui.screens.features.tabs.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,11 +14,14 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,15 +37,14 @@ import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.Category
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.vo.Category
+import com.example.compose_ui.ui.cores.data.vo.Product
 import com.example.compose_ui.ui.screens.features.tabs.home.components.CategoriesTitle
 import com.example.compose_ui.ui.screens.features.tabs.home.components.Category
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.size_12
 import com.example.compose_ui.ui.theme.size_16
-import com.example.compose_ui.ui.theme.size_20
 import com.example.compose_ui.ui.theme.size_24
 import com.example.compose_ui.ui.theme.size_32
 import com.example.compose_ui.ui.theme.size_4
@@ -57,6 +60,7 @@ fun Home(
     onOpenMenu: () -> Unit = {}
 ) {
     viewModel.run {
+        Log.i("xxx+++", isLoading.toString())
         HomeScreen(
             isLoadingCategories = isLoadingCategories.collectAsState().value,
             isLoadingProducts = isLoadingProducts.collectAsState().value,
@@ -185,4 +189,19 @@ fun HomePreview() {
     HomeScreen {
 
     }
+}
+
+data class ScreenSize(val w: Dp, val h: Dp)
+
+@Stable
+class HomeStableNew {
+    val screenSize: ScreenSize
+        @Composable get() = LocalConfiguration.current.run {
+            ScreenSize(w = screenWidthDp.dp, h = screenHeightDp.dp)
+        }
+}
+
+@Composable
+fun HomeScreenNew(state: HomeStableNew) {
+    state.screenSize
 }

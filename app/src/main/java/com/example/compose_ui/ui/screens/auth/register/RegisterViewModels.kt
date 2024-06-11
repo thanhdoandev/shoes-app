@@ -2,8 +2,8 @@ package com.example.compose_ui.ui.screens.auth.register
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.compose_ui.ui.components.bases.BaseViewModel
-import com.example.compose_ui.ui.data.enums.EFieldType
-import com.example.compose_ui.ui.data.vo.Person
+import com.example.compose_ui.ui.cores.data.enums.EFieldType
+import com.example.compose_ui.ui.cores.data.vo.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

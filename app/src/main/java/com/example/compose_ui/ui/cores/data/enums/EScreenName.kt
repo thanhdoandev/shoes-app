@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.data.enums
+package com.example.compose_ui.ui.cores.data.enums
 
 enum class EScreenName(val screenName: String) {
     APP_NAV("APP_NAV"),

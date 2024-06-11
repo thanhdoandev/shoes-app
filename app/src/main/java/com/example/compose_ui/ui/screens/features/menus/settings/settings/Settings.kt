@@ -32,8 +32,8 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.enums.EScreenName
-import com.example.compose_ui.ui.data.vo.DropDownItem
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.vo.DropDownItem
 import com.example.compose_ui.ui.screens.features.menus.settings.components.SettingItem
 import com.example.compose_ui.ui.theme.font_20
 import com.example.compose_ui.ui.theme.primaryColor

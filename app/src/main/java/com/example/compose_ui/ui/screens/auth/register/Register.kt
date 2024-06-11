@@ -1,6 +1,5 @@
 package com.example.compose_ui.ui.screens.auth.register
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
@@ -27,7 +26,7 @@ import com.example.compose_ui.ui.components.cores.JPSecondaryButton
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
-import com.example.compose_ui.ui.data.enums.EFieldType
+import com.example.compose_ui.ui.cores.data.enums.EFieldType
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
 import com.example.compose_ui.ui.theme.size_16
@@ -49,7 +48,6 @@ fun Register(
 
     LaunchedEffect(isSuccess) {
         if (isSuccess) {
-            Log.i("xxxx++++", "vao day")
             onOpenHome()
         }
     }

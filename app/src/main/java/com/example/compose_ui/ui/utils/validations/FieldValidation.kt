@@ -1,8 +1,8 @@
 package com.example.compose_ui.ui.utils.validations
 
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.data.generics.forms.FromValidationBase
-import com.example.compose_ui.ui.data.vo.ValidationResult
+import com.example.compose_ui.ui.cores.data.generics.forms.FromValidationBase
+import com.example.compose_ui.ui.cores.data.vo.ValidationResult
 
 class FieldValidation : FromValidationBase<String, ValidationResult> {
     override fun execute(input: String): ValidationResult {

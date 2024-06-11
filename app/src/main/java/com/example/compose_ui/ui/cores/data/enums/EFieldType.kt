@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.data.enums
+package com.example.compose_ui.ui.cores.data.enums
 
 enum class EFieldType(val type: String) {
     YOUR_NAME("Your name"),

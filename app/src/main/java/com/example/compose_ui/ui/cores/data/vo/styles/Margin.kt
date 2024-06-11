@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.data.vo.styles
+package com.example.compose_ui.ui.cores.data.vo.styles
 
 import androidx.compose.ui.unit.Dp
 import com.example.compose_ui.ui.theme.none

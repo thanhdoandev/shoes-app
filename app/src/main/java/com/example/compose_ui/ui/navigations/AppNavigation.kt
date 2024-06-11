@@ -23,8 +23,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.compose_ui.ui.data.enums.EScreenName
-import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.navigations.components.AppBottomTabs
 import com.example.compose_ui.ui.navigations.components.MenuContent
 import com.example.compose_ui.ui.screens.auth.navigations.authGraph

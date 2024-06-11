@@ -54,7 +54,7 @@ fun ContainerPage(
     isBack: Boolean = true,
     bgColor: Color? = null,
     isMenu: Boolean = false,
-    uiState: UIState = UIState(),
+    uiState: UiState = UiState(),
     content: @Composable ColumnScope.() -> Unit,
 ) {
 
@@ -63,7 +63,7 @@ fun ContainerPage(
     }
 
     LaunchedEffect(uiState) {
-        if (uiState.copy().message.isNotEmpty()) {
+        if (uiState.copy().errorMessage.isNotEmpty()) {
             isVisibleDialogError = true
         }
     }
@@ -113,7 +113,7 @@ fun ContainerPage(
                 Dialog(onDismissRequest = {
                     uiState.apply {
                         isLoading = false
-                        message = ""
+                        errorMessage = ""
                     }
                     isVisibleDialogError = false
                 }) {
@@ -131,7 +131,7 @@ fun ContainerPage(
                                 style = MaterialTheme.typography.titleMedium
                             )
                             JPText(
-                                text = uiState.message,
+                                text = uiState.errorMessage,
                                 color = Color.Black,
                                 mTop = size_8
                             )
