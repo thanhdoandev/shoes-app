@@ -1,9 +1,12 @@
 package com.example.compose_ui.ui.components.bases
 
+import android.util.Log
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.compose_ui.ui.cores.data.response.ApiResponse
 import com.example.compose_ui.ui.cores.data.vo.Category
 import com.example.compose_ui.ui.cores.data.vo.Person
 import com.example.compose_ui.ui.cores.data.vo.Product
@@ -20,10 +23,14 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 data class UiState(
@@ -247,6 +254,46 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
             logout.onAwait
             resetState(false)
             onFinish()
+        }
+    }
+
+    open fun <T> callApisOnThread(
+        apis: List<Flow<ApiResponse<T>>>,
+        onFinish: () -> Unit,
+        onEachSuccess: (T) -> Unit = {},
+        onError: (error: String) -> Unit = {},
+        isLoading: Boolean = true,
+        isVisibleError: Boolean = true
+    ) {
+        if (isLoading) {
+            _uiState.value = _uiState.value.copy(isLoading = true)
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            apis.map { request ->
+                async {
+                    request.catch { }.collect { result ->
+                        withContext(Dispatchers.Main) {
+                            when (result) {
+                                is ApiResponse.Success -> {
+                                    onEachSuccess(result.values)
+                                }
+
+                                is ApiResponse.Error -> {
+                                    if (isVisibleError) {
+                                        _uiState.value =
+                                            _uiState.value.copy(errorMessage = result.error)
+                                    }
+                                    onError(result.error)
+                                }
+                            }
+                        }
+                    }
+                }
+            }.awaitAll()
+            withContext(Dispatchers.Main) {
+                _uiState.value = _uiState.value.copy(isLoading = false)
+                onFinish()
+            }
         }
     }
 }

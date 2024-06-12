@@ -60,7 +60,6 @@ fun Home(
     onOpenMenu: () -> Unit = {}
 ) {
     viewModel.run {
-        Log.i("xxx+++", isLoading.toString())
         HomeScreen(
             isLoadingCategories = isLoadingCategories.collectAsState().value,
             isLoadingProducts = isLoadingProducts.collectAsState().value,

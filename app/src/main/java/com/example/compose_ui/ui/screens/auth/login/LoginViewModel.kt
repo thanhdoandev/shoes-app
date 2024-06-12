@@ -3,7 +3,7 @@ package com.example.compose_ui.ui.screens.auth.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.compose_ui.ui.components.bases.BaseViewModel
-import com.example.compose_ui.ui.components.bases.UiState
+import com.example.compose_ui.ui.cores.data.repository.auth.IAuthRepository
 import com.example.compose_ui.ui.utils.validations.EmailValidation
 import com.example.compose_ui.ui.utils.validations.PasswordValidation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class UiLoginState(
     var email: String = "",
     var password: String = "",
     var emailError: Int? = null,
-    var passwordError: Int? = null,
-    var loginState: UiState = UiState()
+    var passwordError: Int? = null
 )
 
 sealed class LoginEvent {
@@ -34,16 +34,18 @@ sealed class LoginState {
 }
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
-    BaseViewModel(savedStateHandle) {
+class LoginViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val authRepository: IAuthRepository
+) : BaseViewModel(savedStateHandle) {
     private val _loginUiState = MutableStateFlow(UiLoginState())
-    private val isLogged: MutableStateFlow<Boolean>
-        get() = MutableStateFlow(isUserSigned())
+    private val _isLogged: MutableStateFlow<Boolean> = MutableStateFlow(isUserSigned())
+
     private val validateEmail = EmailValidation()
     private val validatePassword = PasswordValidation()
 
     val loginUiState: StateFlow<LoginState> =
-        combine(_loginUiState, isLogged) { loginInput, isLogin ->
+        combine(_loginUiState, _isLogged) { loginInput, isLogin ->
             if (isLogin) LoginState.Success else LoginState.LoginUi(loginData = loginInput)
         }.stateIn(
             scope = viewModelScope,
@@ -75,11 +77,14 @@ class LoginViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
 
     private fun onLogin() {
         _loginUiState.apply {
-            value = value.copy(loginState = UiState(isLoading = true))
             value.run {
-                loginToServer(email, password) {
-                    isLogged.value = it
-                    value = value.copy(loginState = uiState.value)
+                viewModelScope.launch {
+                    callApisOnThread(
+                        apis = listOf(authRepository.login(email, password)),
+                        onFinish = {
+                            _isLogged.value = true
+                        }
+                    )
                 }
             }
         }

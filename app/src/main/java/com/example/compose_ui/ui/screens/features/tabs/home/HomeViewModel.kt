@@ -52,7 +52,6 @@ class HomeViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
     }
 
     private fun callApiFromServer() {
-        Log.i("xxxx++", "vao day")
         _isLoadingCategories.value = true
         _isLoadingProducts.value = true
         isLoading = true

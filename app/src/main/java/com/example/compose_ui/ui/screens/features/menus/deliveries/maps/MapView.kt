@@ -93,7 +93,7 @@ fun MapView() {
                             currentLocation = LatLng(latitude, longitude)
                         }
                         isLoading = false
-                    }.addOnFailureListener { exception ->
+                    }.addOnFailureListener { _ ->
                         isLoading = false
                     }
                 } else {

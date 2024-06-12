@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.components.bases.UiState
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPInput
@@ -45,13 +46,15 @@ fun Login(
     onRegister: () -> Unit = {},
     onOpenHome: () -> Unit = {}
 ) {
-    val loginUiStates by viewModel.loginUiState.collectAsState()
+    val uiStateLogin by viewModel.loginUiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
-    when (loginUiStates) {
+    when (uiStateLogin) {
         is LoginState.LoginUi -> {
             viewModel.run {
                 LoginScreen(
-                    uiState = (loginUiStates as LoginState.LoginUi).loginData,
+                    uiState = uiState,
+                    uiStateLogin = (uiStateLogin as LoginState.LoginUi).loginData,
                     onUpdateData = { field, data ->
                         onLoginEvent(
                             if (field == EFieldType.EMAIL) {
@@ -77,12 +80,13 @@ fun Login(
 
 @Composable
 private fun LoginScreen(
-    uiState: UiLoginState,
+    uiState: UiState,
+    uiStateLogin: UiLoginState,
     onUpdateData: (field: EFieldType, data: String) -> Unit = { _, _ -> },
     onLogin: (isSocial: Boolean) -> Unit = {},
     onRegister: () -> Unit = {}
 ) {
-    ContainerPage(uiState = uiState.loginState) {
+    ContainerPage(uiState = uiState) {
         if (UiStates().isKeyBoardHide) JPSpacer(h = size_80)
         JPCard(
             roundTopStart = size_28,
@@ -112,7 +116,7 @@ private fun LoginScreen(
                         isCenter = true
                     )
                     JPInput(
-                        value = uiState.email,
+                        value = uiStateLogin.email,
                         onValueChange = {
                             onUpdateData(EFieldType.EMAIL, it)
                         },
@@ -121,11 +125,11 @@ private fun LoginScreen(
                         focusBorderColor = Color.White,
                         contentColor = Color.White,
                         unFocusLabelColor = primaryText,
-                        isError = uiState.emailError != null,
-                        errorMessage = uiState.emailError?.let { stringResource(it) }
+                        isError = uiStateLogin.emailError != null,
+                        errorMessage = uiStateLogin.emailError?.let { stringResource(it) }
                     )
                     JPInput(
-                        value = uiState.password,
+                        value = uiStateLogin.password,
                         contentColor = Color.White,
                         onValueChange = {
                             onUpdateData(EFieldType.PASSWORD, it)
@@ -134,8 +138,8 @@ private fun LoginScreen(
                         focusBorderColor = Color.White,
                         unFocusLabelColor = primaryText,
                         isPassword = true,
-                        isError = uiState.passwordError != null,
-                        errorMessage = uiState.passwordError?.let { stringResource(it) },
+                        isError = uiStateLogin.passwordError != null,
+                        errorMessage = uiStateLogin.passwordError?.let { stringResource(it) },
                         imeAction = ImeAction.Done,
                         onDone = {
                             onLogin(false)
@@ -178,5 +182,5 @@ private fun LoginScreen(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun LoginPreview() {
-    LoginScreen(UiLoginState())
+    LoginScreen(UiState(), UiLoginState())
 }
