@@ -15,8 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.bases.UIState
+import com.example.compose_ui.ui.bases.ContainerPage
+import com.example.compose_ui.ui.cores.data.model.UiState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -93,7 +93,7 @@ fun MapView() {
                             currentLocation = LatLng(latitude, longitude)
                         }
                         isLoading = false
-                    }.addOnFailureListener { exception ->
+                    }.addOnFailureListener { _ ->
                         isLoading = false
                     }
                 } else {
@@ -103,7 +103,7 @@ fun MapView() {
         }
     }
 
-    ContainerPage(uiState = UIState(isLoading = isLoading)) {
+    ContainerPage(uiState = UiState(isLoading = isLoading)) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState

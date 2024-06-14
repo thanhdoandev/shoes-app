@@ -35,7 +35,7 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.DropDownItem
+import com.example.compose_ui.ui.cores.data.vo.DropDownItem
 import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.theme.font_16
 import com.example.compose_ui.ui.theme.font_20

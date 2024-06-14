@@ -34,7 +34,7 @@ import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.navigations.getCurrentRoute
 import com.example.compose_ui.ui.theme.CustomComposeTheme

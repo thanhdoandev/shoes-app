@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.screens.auth.navigations
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class AuthScreens(val route: EScreenName) {
     data object Login : AuthScreens(EScreenName.LOGIN)

@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.screens.intro.navigations
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class IntroScreens(val route: EScreenName) {
     data object Intro : IntroScreens(EScreenName.INTRO_ROUTE)

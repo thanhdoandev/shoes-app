@@ -7,8 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.compose_ui.ui.data.enums.EScreenName
-import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.navigations.pushToScreen
 import com.example.compose_ui.ui.screens.features.tabs.home.Home
 import com.example.compose_ui.ui.screens.features.tabs.home.ui.detail.ShoesDetail

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.bases.UIState
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPInput
@@ -27,9 +25,10 @@ import com.example.compose_ui.ui.components.cores.JPSecondaryButton
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
-import com.example.compose_ui.ui.data.enums.EFieldType
-import com.example.compose_ui.ui.extensions.Keyboard
-import com.example.compose_ui.ui.extensions.keyboardAsState
+import com.example.compose_ui.ui.bases.UiStateBase
+import com.example.compose_ui.ui.cores.data.enums.EFieldType
+import com.example.compose_ui.ui.cores.data.model.UiState
+import com.example.compose_ui.ui.screens.iuUtils.UiStates
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
@@ -48,47 +47,48 @@ fun Login(
     onRegister: () -> Unit = {},
     onOpenHome: () -> Unit = {}
 ) {
-    val isLoginSuccess by viewModel.isLoginSuccess.collectAsState()
+    val uiLoginState by viewModel.loginUiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(isLoginSuccess) {
-        if (isLoginSuccess) {
+    when (uiLoginState) {
+        is UiStateBase.UiUpdated -> {
+            viewModel.run {
+                LoginScreen(
+                    uiState = uiState,
+                    uiStateLogin = (uiLoginState as UiStateBase.UiUpdated<LoginInputData>).data,
+                    onUpdateData = { field, data ->
+                        onLoginEvent(
+                            if (field == EFieldType.EMAIL) {
+                                LoginEvent.EmailChanged(data)
+                            } else {
+                                LoginEvent.PasswordChanged(data)
+                            }
+                        )
+                    },
+                    onLogin = {
+                        if (!it) onLoginEvent(LoginEvent.Submit)
+                    },
+                    onRegister = onRegister
+                )
+            }
+        }
+
+        is UiStateBase.Success -> {
             onOpenHome()
         }
-    }
-
-    viewModel.run {
-        LoginScreen(
-            uiState = uiState.collectAsState().value,
-            uiData = loginState.collectAsState().value,
-            onUpdateData = { field, data ->
-                onLoginEvent(
-                    if (field == EFieldType.EMAIL) {
-                        LoginEvent.EmailChanged(data)
-                    } else {
-                        LoginEvent.PasswordChanged(data)
-                    }
-                )
-            },
-            onLogin = {
-                if (!it) onLoginEvent(LoginEvent.Submit)
-            },
-            onRegister = onRegister
-        )
     }
 }
 
 @Composable
 private fun LoginScreen(
-    uiState: UIState,
-    uiData: LoginData,
+    uiState: UiState,
+    uiStateLogin: LoginInputData,
     onUpdateData: (field: EFieldType, data: String) -> Unit = { _, _ -> },
     onLogin: (isSocial: Boolean) -> Unit = {},
     onRegister: () -> Unit = {}
 ) {
-    val isFocusedInput by keyboardAsState()
-
     ContainerPage(uiState = uiState) {
-        if (isFocusedInput == Keyboard.Closed) JPSpacer(h = size_80)
+        if (UiStates().isKeyBoardHide) JPSpacer(h = size_80)
         JPCard(
             roundTopStart = size_28,
             roundTopEnd = size_28,
@@ -117,7 +117,7 @@ private fun LoginScreen(
                         isCenter = true
                     )
                     JPInput(
-                        value = uiData.email,
+                        value = uiStateLogin.email,
                         onValueChange = {
                             onUpdateData(EFieldType.EMAIL, it)
                         },
@@ -126,11 +126,11 @@ private fun LoginScreen(
                         focusBorderColor = Color.White,
                         contentColor = Color.White,
                         unFocusLabelColor = primaryText,
-                        isError = uiData.emailError != null,
-                        errorMessage = uiData.emailError?.let { stringResource(it) }
+                        isError = uiStateLogin.emailError != null,
+                        errorMessage = uiStateLogin.emailError?.let { stringResource(it) }
                     )
                     JPInput(
-                        value = uiData.password,
+                        value = uiStateLogin.password,
                         contentColor = Color.White,
                         onValueChange = {
                             onUpdateData(EFieldType.PASSWORD, it)
@@ -139,8 +139,8 @@ private fun LoginScreen(
                         focusBorderColor = Color.White,
                         unFocusLabelColor = primaryText,
                         isPassword = true,
-                        isError = uiData.passwordError != null,
-                        errorMessage = uiData.passwordError?.let { stringResource(it) },
+                        isError = uiStateLogin.passwordError != null,
+                        errorMessage = uiStateLogin.passwordError?.let { stringResource(it) },
                         imeAction = ImeAction.Done,
                         onDone = {
                             onLogin(false)
@@ -183,5 +183,5 @@ private fun LoginScreen(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun LoginPreview() {
-    LoginScreen(UIState(), LoginData())
+    LoginScreen(UiState(), LoginInputData())
 }

@@ -33,6 +33,7 @@
     <string name="registerLogin">Log In</string>
     <string name="registerYourName">Your Name *</string>
     <string name="registerButton">Register</string>
+    <string name="registerFullName">Full Name</string>
 
     <!--Home-->
     <string name="homeExplore">Explore</string>

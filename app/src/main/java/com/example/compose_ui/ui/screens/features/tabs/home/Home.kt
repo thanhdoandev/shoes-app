@@ -13,16 +13,18 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.BannerCard
 import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.commons.products.ProductCard
@@ -33,15 +35,14 @@ import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.Category
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.model.Category
+import com.example.compose_ui.ui.cores.data.model.Product
 import com.example.compose_ui.ui.screens.features.tabs.home.components.CategoriesTitle
 import com.example.compose_ui.ui.screens.features.tabs.home.components.Category
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.size_12
 import com.example.compose_ui.ui.theme.size_16
-import com.example.compose_ui.ui.theme.size_20
 import com.example.compose_ui.ui.theme.size_24
 import com.example.compose_ui.ui.theme.size_32
 import com.example.compose_ui.ui.theme.size_4
@@ -56,12 +57,12 @@ fun Home(
     onClickSearch: () -> Unit = {},
     onOpenMenu: () -> Unit = {}
 ) {
-    viewModel.run {
+    viewModel.homeUiState.run {
         HomeScreen(
-            isLoadingCategories = isLoadingCategories.collectAsState().value,
-            isLoadingProducts = isLoadingProducts.collectAsState().value,
-            products = products.collectAsState().value,
-            categories = categories.collectAsState().value,
+            isLoadingCategories = isCategoryLoading,
+            isLoadingProducts = isProductLoading,
+            products = products,
+            categories = categories,
             onDetailProduct = onViewDetail,
             onClickSearch = onClickSearch,
             onOpenMenu = onOpenMenu
@@ -185,4 +186,19 @@ fun HomePreview() {
     HomeScreen {
 
     }
+}
+
+data class ScreenSize(val w: Dp, val h: Dp)
+
+@Stable
+class HomeStableNew {
+    val screenSize: ScreenSize
+        @Composable get() = LocalConfiguration.current.run {
+            ScreenSize(w = screenWidthDp.dp, h = screenHeightDp.dp)
+        }
+}
+
+@Composable
+fun HomeScreenNew(state: HomeStableNew) {
+    state.screenSize
 }

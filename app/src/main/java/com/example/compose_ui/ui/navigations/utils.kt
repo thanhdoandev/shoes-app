@@ -4,7 +4,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 fun NavController.pushToScreen(route: EScreenName, navOptions: NavOptions? = null) {
     navigate(EScreenName.getScreenName(route), navOptions)

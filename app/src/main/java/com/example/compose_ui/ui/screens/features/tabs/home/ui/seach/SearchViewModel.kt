@@ -2,8 +2,8 @@ package com.example.compose_ui.ui.screens.features.tabs.home.ui.seach
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.compose_ui.ui.components.bases.BaseViewModel
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.bases.BaseViewModel
+import com.example.compose_ui.ui.cores.data.model.Product
 import com.example.compose_ui.ui.utils.Constants.Default.DELAY_SEARCH
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -39,16 +39,16 @@ class SearchViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
             if (textSearch.isEmpty()) mutableListOf() else {
                 val newProducts: MutableList<Product> = products
                 _isLoading.value = true
-                searchProducts(textSearch) {
-                    newProducts.run {
-                        clear()
-                        addAll(it)
-                        if (!histories.contains(textSearch)) {
-                            histories.add(0, textSearch)
-                        }
-                    }
-                    _isLoading.value = false
-                }
+//                searchProducts(textSearch) {
+//                    newProducts.run {
+//                        clear()
+//                        addAll(it)
+//                        if (!histories.contains(textSearch)) {
+//                            histories.add(0, textSearch)
+//                        }
+//                    }
+//                    _isLoading.value = false
+//                }
                 newProducts
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _shoesList.value)

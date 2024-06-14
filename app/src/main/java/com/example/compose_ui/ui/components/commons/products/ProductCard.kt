@@ -33,8 +33,8 @@ import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPImage
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.vo.Product
-import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.cores.data.model.Product
+import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.modifierMargin
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor

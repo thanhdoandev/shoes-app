@@ -28,8 +28,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.data.enums.EScreenName
-import com.example.compose_ui.ui.data.enums.EScreenName.Companion.getScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName.Companion.getScreenName
 import com.example.compose_ui.ui.navigations.getCurrentRoute
 
 sealed class BottomTab(

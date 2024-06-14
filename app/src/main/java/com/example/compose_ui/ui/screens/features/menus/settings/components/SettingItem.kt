@@ -15,7 +15,7 @@ import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 import com.example.compose_ui.ui.extensions.onClickNoEffect
 import com.example.compose_ui.ui.screens.features.menus.settings.settings.SettingItem
 import com.example.compose_ui.ui.theme.font_16

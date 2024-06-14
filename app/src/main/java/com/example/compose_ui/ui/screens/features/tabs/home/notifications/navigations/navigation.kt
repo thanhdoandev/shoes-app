@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 import com.example.compose_ui.ui.screens.features.tabs.home.notifications.Notifications
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

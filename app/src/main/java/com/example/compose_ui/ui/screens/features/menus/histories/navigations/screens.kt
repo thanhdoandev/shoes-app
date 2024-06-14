@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.screens.features.menus.histories.navigations
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class HistoryScreen(val route: EScreenName) {
     data object Histories : HistoryScreen(EScreenName.HISTORY)

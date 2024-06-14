@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.products.ProductCardRow
 import com.example.compose_ui.ui.components.commons.apps.SearchInput
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -29,7 +29,7 @@ import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.Loading
-import com.example.compose_ui.ui.data.vo.Product
+import com.example.compose_ui.ui.cores.data.model.Product
 import com.example.compose_ui.ui.screens.features.tabs.home.ui.seach.components.HistorySearch
 import com.example.compose_ui.ui.screens.features.tabs.home.ui.seach.components.MicroAnimation
 import com.example.compose_ui.ui.theme.none

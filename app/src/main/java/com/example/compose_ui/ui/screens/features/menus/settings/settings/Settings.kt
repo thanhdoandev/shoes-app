@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.LocaleListCompat
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.apps.BottomSheetModal
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -32,8 +32,8 @@ import com.example.compose_ui.ui.components.cores.JPIcon
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.data.enums.EScreenName
-import com.example.compose_ui.ui.data.vo.DropDownItem
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.vo.DropDownItem
 import com.example.compose_ui.ui.screens.features.menus.settings.components.SettingItem
 import com.example.compose_ui.ui.theme.font_20
 import com.example.compose_ui.ui.theme.primaryColor

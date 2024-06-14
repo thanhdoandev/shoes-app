@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.screens.features.tabs.home.navigations
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class HomeScreen(val route: EScreenName) {
     data object Home : HomeScreen(EScreenName.HOME)

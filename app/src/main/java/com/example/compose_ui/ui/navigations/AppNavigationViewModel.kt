@@ -1,34 +1,47 @@
 package com.example.compose_ui.ui.navigations
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import com.example.compose_ui.ui.components.bases.BaseViewModel
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import androidx.lifecycle.viewModelScope
+import com.example.compose_ui.ui.bases.BaseViewModel
+import com.example.compose_ui.ui.cores.data.repository.auth.IAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppNavigationViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
-    BaseViewModel(savedStateHandle) {
-    val auth: FirebaseAuth = Firebase.auth
+class AppNavigationViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val authRepository: IAuthRepository
+) : BaseViewModel(savedStateHandle) {
+    var isSigned: Boolean by mutableStateOf(false)
+        private set
 
-    private var _isSigned: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isSigned = _isSigned.asStateFlow()
 
     init {
-        _isSigned.value = auth.currentUser != null
+        viewModelScope.launch {
+            callApisOnThread(
+                apis = listOf(authRepository.isLoggedIn()),
+                onEachSuccess = { isSign ->
+                    isSigned = isSign
+                }
+            )
+        }
     }
 
     fun userLogout() {
-        userSignOut {
-            _isSigned.value = false
+        viewModelScope.launch {
+            callApisOnThread(
+                apis = listOf(authRepository.logout()),
+                onEachSuccess = { _ ->
+                    isSigned = false
+                })
         }
     }
 
     fun userLoginSuccess() {
-        _isSigned.value = auth.currentUser != null
+        isSigned = true
     }
 }

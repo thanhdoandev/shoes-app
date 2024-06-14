@@ -25,7 +25,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.example.compose_ui.ui.data.vo.styles.Margin
+import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.theme.none
 
 fun Modifier.modifierMargin(marginLayout: Margin): Modifier {

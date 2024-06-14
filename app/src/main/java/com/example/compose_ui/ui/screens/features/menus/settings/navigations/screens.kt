@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.screens.features.menus.settings.navigations
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class SettingScreen(val route: EScreenName) {
     data object Settings : SettingScreen(EScreenName.SETTINGS)

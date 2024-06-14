@@ -1,7 +1,7 @@
 package com.example.compose_ui.ui.screens.features.tabs.favorites.navigations
 
 
-import com.example.compose_ui.ui.data.enums.EScreenName
+import com.example.compose_ui.ui.cores.data.enums.EScreenName
 
 sealed class FavoriteScreen(val route: EScreenName) {
     data object Favorites : FavoriteScreen(EScreenName.FAVORITES)
