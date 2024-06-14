@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.cores.JPButton
 
 @Composable

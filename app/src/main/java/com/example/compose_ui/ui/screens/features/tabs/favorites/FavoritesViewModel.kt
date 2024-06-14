@@ -1,7 +1,7 @@
 package com.example.compose_ui.ui.screens.features.tabs.favorites
 
 import androidx.lifecycle.ViewModel
-import com.example.compose_ui.ui.cores.data.vo.Product
+import com.example.compose_ui.ui.cores.data.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

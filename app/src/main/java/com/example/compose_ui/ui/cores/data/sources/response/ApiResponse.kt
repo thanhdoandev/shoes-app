@@ -1,4 +1,4 @@
-package com.example.compose_ui.ui.cores.data.response
+package com.example.compose_ui.ui.cores.data.sources.response
 
 sealed class ApiResponse<out T> {
     data class Success<out T>(val values: T) : ApiResponse<T>()

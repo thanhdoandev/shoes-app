@@ -1,6 +1,6 @@
 package com.example.compose_ui.ui.cores.data.database.localdata
 
-import com.example.compose_ui.ui.cores.data.vo.Category
+import com.example.compose_ui.ui.cores.data.model.Category
 
 val Categories = mutableListOf(
     Category(

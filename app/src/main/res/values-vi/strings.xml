@@ -35,6 +35,7 @@
     <string name="registerButton">Đăng ký</string>
 
     <!--Home-->
+    <string name="registerFullName">Họ và Tên</string>
     <string name="homeExplore">Khám phá</string>
     <string name="homeCategories">Chọn danh mục</string>
     <string name="homeSeeAll">Nhìn thấy tất cả</string>

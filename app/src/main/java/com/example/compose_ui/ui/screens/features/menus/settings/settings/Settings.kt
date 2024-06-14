@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.LocaleListCompat
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.apps.BottomSheetModal
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn

@@ -11,11 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -27,6 +28,8 @@ import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
 import com.example.compose_ui.ui.cores.data.enums.EFieldType
+import com.example.compose_ui.ui.cores.data.model.UiState
+import com.example.compose_ui.ui.screens.iuUtils.UiStates
 import com.example.compose_ui.ui.theme.primaryColor
 import com.example.compose_ui.ui.theme.primaryText
 import com.example.compose_ui.ui.theme.size_16
@@ -35,28 +38,48 @@ import com.example.compose_ui.ui.theme.size_6
 
 @Composable
 fun Register(
-    onBack: () -> Boolean? = { false },
+    onBack: () -> Unit = {},
     onOpenHome: () -> Unit = {},
     viewModel: RegisterViewModels = hiltViewModel()
 ) {
-    val userInfo by viewModel.user.collectAsState()
-    val isSuccess by viewModel.isSuccess.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
-    fun onUserChange(type: EFieldType, value: String) {
-        viewModel.userDataChange(type, value)
-    }
-
-    LaunchedEffect(isSuccess) {
-        if (isSuccess) {
-            onOpenHome()
+    viewModel.run {
+        LaunchedEffect(uiRegisterState) {
+            if (uiRegisterState.isRegisterSuccess) {
+                onOpenHome()
+            }
         }
+        RegisterScreen(
+            uiState = uiState,
+            uiStateRegister = uiRegisterState,
+            onBack = onBack,
+            onUpdateData = { type, value ->
+                onRegisterEvent(RegisterEvents.InputChanged(type, value))
+            },
+            onRegister = { onRegisterEvent(RegisterEvents.Submit) }
+        )
     }
+}
 
-    ContainerPage(uiState = viewModel.uiState.collectAsState().value) {
+@Composable
+private fun RegisterScreen(
+    uiState: UiState,
+    uiStateRegister: RegisterData,
+    onBack: () -> Unit = {},
+    onUpdateData: (field: EFieldType, value: String) -> Unit = { _, _ -> },
+    onRegister: () -> Unit = {}
+) {
+    ContainerPage(uiState = uiState) {
         JPColumn {
-            JPSpacer(h = size_28)
-            JPIcon(icon = Icons.Default.ArrowBackIosNew, mStart = size_16, onClick = { onBack() })
-            JPSpacer(h = size_28)
+            if (UiStates().isKeyBoardHide) {
+                JPSpacer(h = size_28)
+                JPIcon(
+                    icon = Icons.Default.ArrowBackIosNew,
+                    mStart = size_16,
+                    onClick = { onBack() })
+                JPSpacer(h = size_28)
+            }
             JPCard(
                 isMaxSize = true,
                 roundTopStart = 28.dp,
@@ -77,48 +100,62 @@ fun Register(
                     text = stringResource(id = R.string.loginDesc),
                     isCenter = true
                 )
-                JPInput(
-                    value = userInfo.name,
-                    onValueChange = {
-                        onUserChange(EFieldType.YOUR_NAME, it)
-                    },
-                    label = stringResource(id = R.string.registerYourName),
-                    mTop = 40.dp,
-                    focusBorderColor = Color.White,
-                    contentColor = Color.White,
-                    unFocusLabelColor = primaryText
-                )
-                JPInput(
-                    value = userInfo.email,
-                    contentColor = Color.White,
-                    onValueChange = {
-                        onUserChange(EFieldType.EMAIL, it)
-                    },
-                    label = stringResource(id = R.string.emailLabel),
-                    focusBorderColor = Color.White,
-                    unFocusLabelColor = primaryText,
-                    isPassword = true
-                )
-                JPInput(
-                    value = userInfo.password,
-                    contentColor = Color.White,
-                    onValueChange = {
-                        onUserChange(EFieldType.PASSWORD, it)
-                    },
-                    label = stringResource(id = R.string.passwordLabel),
-                    focusBorderColor = Color.White,
-                    unFocusLabelColor = primaryText,
-                    isPassword = true
-                )
+
+                uiStateRegister.run {
+                    JPInput(
+                        value = fullName,
+                        onValueChange = {
+                            onUpdateData(EFieldType.YOUR_NAME, it)
+                        },
+                        label = stringResource(id = R.string.registerYourName),
+                        mTop = 40.dp,
+                        focusBorderColor = Color.White,
+                        contentColor = Color.White,
+                        unFocusLabelColor = primaryText,
+                        isError = fullNameError != null,
+                        errorMessage = fullNameError?.let {
+                            stringResource(it, stringResource(id = R.string.registerFullName))
+                        }
+                    )
+                    JPInput(
+                        value = email,
+                        contentColor = Color.White,
+                        onValueChange = {
+                            onUpdateData(EFieldType.EMAIL, it)
+                        },
+                        label = stringResource(id = R.string.emailLabel),
+                        focusBorderColor = Color.White,
+                        unFocusLabelColor = primaryText,
+                        isPassword = true,
+                        isError = emailError != null,
+                        errorMessage = emailError?.let { stringResource(it) }
+                    )
+                    JPInput(
+                        value = uiStateRegister.password,
+                        contentColor = Color.White,
+                        onValueChange = {
+                            onUpdateData(EFieldType.PASSWORD, it)
+                        },
+                        label = stringResource(id = R.string.passwordLabel),
+                        focusBorderColor = Color.White,
+                        unFocusLabelColor = primaryText,
+                        isPassword = true,
+                        isError = passwordError != null,
+                        errorMessage = passwordError?.let { stringResource(it) },
+                        imeAction = ImeAction.Done,
+                        onDone = {
+                            onRegister()
+                        }
+                    )
+                }
+
                 JPButton(
                     label = stringResource(id = R.string.registerButton),
                     bgColor = Color.White,
                     textColor = Color.Black,
                     isBorder = true,
                     mTop = 48.dp
-                ) {
-                    viewModel.registerAccount()
-                }
+                ) { onRegister() }
                 JPSecondaryButton(
                     mTop = 16.dp,
                     label = stringResource(id = R.string.loginWithGoogleButton),
@@ -143,5 +180,5 @@ fun Register(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 private fun RegisterPreview() {
-    Register()
+    RegisterScreen(UiState(), RegisterData())
 }

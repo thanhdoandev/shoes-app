@@ -14,7 +14,7 @@ class FieldValidation : FromValidationBase<String, ValidationResult> {
         }
 
         return ValidationResult(
-            isSuccess = false,
+            isSuccess = true,
             errorMessage = null
         )
     }

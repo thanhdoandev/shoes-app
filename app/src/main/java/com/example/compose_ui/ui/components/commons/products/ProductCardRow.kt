@@ -15,8 +15,8 @@ import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.cores.data.vo.Product
-import com.example.compose_ui.ui.cores.data.vo.getProductPreview
+import com.example.compose_ui.ui.cores.data.model.Product
+import com.example.compose_ui.ui.cores.data.model.getProductPreview
 import com.example.compose_ui.ui.cores.data.vo.styles.Margin
 import com.example.compose_ui.ui.extensions.convertToDoubleDisplay
 import com.example.compose_ui.ui.extensions.modifierMargin

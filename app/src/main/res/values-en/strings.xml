@@ -35,6 +35,7 @@
     <string name="registerButton">Register</string>
 
     <!--Home-->
+    <string name="registerFullName">Full Name</string>
     <string name="homeExplore">Explore</string>
     <string name="homeCategories">Select Category</string>
     <string name="homeSeeAll">See All</string>

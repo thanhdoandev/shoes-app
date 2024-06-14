@@ -16,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.bases.UiState
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPInput
@@ -26,7 +25,9 @@ import com.example.compose_ui.ui.components.cores.JPSecondaryButton
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
+import com.example.compose_ui.ui.bases.UiStateBase
 import com.example.compose_ui.ui.cores.data.enums.EFieldType
+import com.example.compose_ui.ui.cores.data.model.UiState
 import com.example.compose_ui.ui.screens.iuUtils.UiStates
 import com.example.compose_ui.ui.theme.none
 import com.example.compose_ui.ui.theme.primaryColor
@@ -46,15 +47,15 @@ fun Login(
     onRegister: () -> Unit = {},
     onOpenHome: () -> Unit = {}
 ) {
-    val uiStateLogin by viewModel.loginUiState.collectAsState()
+    val uiLoginState by viewModel.loginUiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
 
-    when (uiStateLogin) {
-        is LoginState.LoginUi -> {
+    when (uiLoginState) {
+        is UiStateBase.UiUpdated -> {
             viewModel.run {
                 LoginScreen(
                     uiState = uiState,
-                    uiStateLogin = (uiStateLogin as LoginState.LoginUi).loginData,
+                    uiStateLogin = (uiLoginState as UiStateBase.UiUpdated<LoginInputData>).data,
                     onUpdateData = { field, data ->
                         onLoginEvent(
                             if (field == EFieldType.EMAIL) {
@@ -72,7 +73,7 @@ fun Login(
             }
         }
 
-        is LoginState.Success -> {
+        is UiStateBase.Success -> {
             onOpenHome()
         }
     }
@@ -81,7 +82,7 @@ fun Login(
 @Composable
 private fun LoginScreen(
     uiState: UiState,
-    uiStateLogin: UiLoginState,
+    uiStateLogin: LoginInputData,
     onUpdateData: (field: EFieldType, data: String) -> Unit = { _, _ -> },
     onLogin: (isSocial: Boolean) -> Unit = {},
     onRegister: () -> Unit = {}
@@ -182,5 +183,5 @@ private fun LoginScreen(
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
 private fun LoginPreview() {
-    LoginScreen(UiState(), UiLoginState())
+    LoginScreen(UiState(), LoginInputData())
 }

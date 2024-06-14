@@ -1,7 +1,7 @@
-package com.example.compose_ui.ui.cores.data.remotes
+package com.example.compose_ui.ui.cores.data.sources.remotes
 
 import com.example.compose_ui.ui.cores.data.model.Person
-import com.example.compose_ui.ui.cores.data.response.ApiResponse
+import com.example.compose_ui.ui.cores.data.sources.response.ApiResponse
 import javax.inject.Singleton
 
 @Singleton

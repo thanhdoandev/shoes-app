@@ -34,8 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
-import com.example.compose_ui.ui.components.bases.ContainerPage
-import com.example.compose_ui.ui.components.bases.UiState
+import com.example.compose_ui.ui.bases.ContainerPage
 import com.example.compose_ui.ui.components.commons.products.ProductCard
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPColumn
@@ -46,8 +45,9 @@ import com.example.compose_ui.ui.components.cores.JPLocalImage
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
-import com.example.compose_ui.ui.cores.data.vo.Product
-import com.example.compose_ui.ui.cores.data.vo.getProductPreview
+import com.example.compose_ui.ui.cores.data.model.Product
+import com.example.compose_ui.ui.cores.data.model.UiState
+import com.example.compose_ui.ui.cores.data.model.getProductPreview
 import com.example.compose_ui.ui.extensions.convertToDoubleDisplay
 import com.example.compose_ui.ui.screens.features.tabs.home.components.CategoriesTitle
 import com.example.compose_ui.ui.theme.colorUnlike
@@ -70,20 +70,18 @@ fun ShoesDetail(
     viewModel: ShoesDetailViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
-    val shoes by viewModel.shoes.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
-    val similarShoes by viewModel.similarShoes.collectAsState()
-    val isLoading by viewModel.isLoadingSimilar.collectAsState()
-
-    ShoesDetailScreen(
-        uiState,
-        shoes,
-        similarShoes,
-        isLoading,
-        onCallBack = onBack,
-        onClickSimilarShoes = {
-            viewModel.getShoesDetail(it)
-        })
+    viewModel.run {
+        ShoesDetailScreen(
+            uiState = uiState,
+            shoes = productDetailUiState.product,
+            similarShoes = productDetailUiState.similarProducts,
+            isLoading = productDetailUiState.isLoading,
+            onCallBack = onBack,
+            onClickSimilarShoes = {
+                viewModel.getShoesDetail(it)
+            })
+    }
 }
 
 @Composable

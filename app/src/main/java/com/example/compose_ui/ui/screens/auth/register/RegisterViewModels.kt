@@ -1,42 +1,125 @@
 package com.example.compose_ui.ui.screens.auth.register
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import com.example.compose_ui.ui.components.bases.BaseViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.compose_ui.ui.bases.BaseViewModel
 import com.example.compose_ui.ui.cores.data.enums.EFieldType
-import com.example.compose_ui.ui.cores.data.vo.Person
+import com.example.compose_ui.ui.cores.data.model.Person
+import com.example.compose_ui.ui.cores.data.repository.auth.IAuthRepository
+import com.example.compose_ui.ui.utils.validations.EmailValidation
+import com.example.compose_ui.ui.utils.validations.FieldValidation
+import com.example.compose_ui.ui.utils.validations.PasswordValidation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class Login(val int: Int)
+data class RegisterData(
+    var fullName: String = "",
+    var email: String = "",
+    var password: String = "",
+    var fullNameError: Int? = null,
+    var emailError: Int? = null,
+    var passwordError: Int? = null,
+    var isRegisterSuccess: Boolean = false
+)
+
+sealed class RegisterEvents {
+    data class InputChanged(val type: EFieldType, val value: String) : RegisterEvents()
+
+    data object Submit : RegisterEvents()
+}
 
 @HiltViewModel
-class RegisterViewModels @Inject constructor(savedStateHandle: SavedStateHandle) :
+class RegisterViewModels @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val authRepository: IAuthRepository
+) :
     BaseViewModel(savedStateHandle) {
-    private val _user = MutableStateFlow(Person(name = "", email = "", password = ""))
-    val user: StateFlow<Person> = _user.asStateFlow()
+    var uiRegisterState: RegisterData by mutableStateOf(RegisterData())
+        private set
 
-    private val _isSuccess = MutableStateFlow(false)
-    val isSuccess = _isSuccess.asStateFlow()
+    internal fun onRegisterEvent(event: RegisterEvents) {
+        when (event) {
+            is RegisterEvents.InputChanged -> {
+                inputValueChanged(event.type, event.value)
+            }
 
-    internal fun userDataChange(type: EFieldType, value: String) {
-        _user.update { person ->
-            person.copy().apply {
-                when (type) {
-                    EFieldType.YOUR_NAME -> name = value
-                    EFieldType.EMAIL -> email = value
-                    else -> password = value
+            is RegisterEvents.Submit -> {
+                Log.i("xxxx++++", "vao day")
+                val isFullNameValid = isValidFullName()
+                val isPasswordValid = isValidatePassword()
+                val isEmailValid = isValidateEmail()
+                Log.i("xxxx++++", "$isEmailValid $isPasswordValid $isFullNameValid")
+                if (isEmailValid && isPasswordValid && isFullNameValid) {
+                    register()
                 }
             }
         }
     }
 
-    internal fun registerAccount() {
-        registerAccountToFirebaseServer(_user.value) {
-            if (it) _isSuccess.value = true
+    private fun inputValueChanged(type: EFieldType, value: String) {
+        when (type) {
+            EFieldType.YOUR_NAME -> {
+                uiRegisterState = uiRegisterState.copy(fullName = value)
+                isValidFullName()
+            }
+
+            EFieldType.EMAIL -> {
+                uiRegisterState = uiRegisterState.copy(email = value)
+                isValidateEmail()
+            }
+
+            else -> {
+                uiRegisterState = uiRegisterState.copy(password = value)
+                isValidatePassword()
+            }
         }
+    }
+
+    private fun register() {
+        Log.i("xxxx++++", "vao day 1112")
+        viewModelScope.launch {
+            Log.i("xxxx++++", "vao day 111")
+            callApisOnThread(
+                apis = listOf(
+                    authRepository.register(
+                        uiRegisterState.run {
+                            Person(
+                                name = fullName,
+                                email = email,
+                                password = password
+                            )
+                        }
+                    )
+                ),
+                onFinish = {},
+                onEachSuccess = {
+                    uiRegisterState = uiRegisterState.copy(isRegisterSuccess = true)
+                }
+            )
+        }
+    }
+
+    private fun isValidateEmail(): Boolean {
+        val emailResult = EmailValidation().execute(uiRegisterState.email)
+        uiRegisterState = uiRegisterState.copy(emailError = emailResult.errorMessage)
+        return emailResult.isSuccess
+
+    }
+
+    private fun isValidatePassword(): Boolean {
+        val passwordValid = PasswordValidation().execute(uiRegisterState.password)
+        uiRegisterState = uiRegisterState.copy(passwordError = passwordValid.errorMessage)
+        return passwordValid.isSuccess
+    }
+
+    private fun isValidFullName(): Boolean {
+        val fullNameValid = FieldValidation().execute(uiRegisterState.fullName)
+        uiRegisterState = uiRegisterState.copy(fullNameError = fullNameValid.errorMessage)
+        return fullNameValid.isSuccess
     }
 }
