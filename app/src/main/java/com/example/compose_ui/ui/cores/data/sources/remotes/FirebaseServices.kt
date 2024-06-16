@@ -26,7 +26,6 @@ class FirebaseServices {
         const val ID = "id"
         const val CATEGORIES = "categories"
         const val TYPE = "type"
-        const val NAME = "name"
         const val SEARCH = "Search"
         const val GET = "Get"
     }
@@ -109,7 +108,7 @@ class FirebaseServices {
         }
     }
 
-    suspend fun logout(): ApiResponse<Boolean> {
+    fun logout(): ApiResponse<Boolean> {
         return try {
             auth.signOut()
             ApiResponse.Success(false)
@@ -159,6 +158,23 @@ class FirebaseServices {
                 products.add(mapDataToProduct(document))
             }
             return ApiResponse.Success(products)
+        } ?: ApiResponse.Success(mutableListOf())
+    }
+
+    suspend fun searchProducts(productName: String): ApiResponse<MutableList<Product>> {
+        if (productName.isEmpty()) return ApiResponse.Success(mutableListOf())
+        return fetchData(SHOES)?.run {
+            val products: MutableList<Product> = mutableListOf()
+            for (document in this) {
+                mapDataToProduct(document).let { pro ->
+                    if (pro.name.toLowerCase(Locale.current)
+                            .contains(productName.toLowerCase(Locale.current))
+                    ) {
+                        products.add(pro)
+                    }
+                }
+            }
+            ApiResponse.Success(products)
         } ?: ApiResponse.Success(mutableListOf())
     }
 }

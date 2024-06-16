@@ -24,60 +24,6 @@ open class BaseViewModel @Inject constructor(val savedStateHandle: SavedStateHan
     private var _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-//    protected fun getProduct(id: String, onFinish: (product: Product) -> Unit) {
-//        callApiWhereFromFirebase(SHOES, ID, id) {
-//            for (document in it) {
-//                onFinish(getProductInfo(document))
-//            }
-//        }
-//    }
-
-//    protected fun getSimilarProducts(
-//        type: String,
-//        onFinish: (products: MutableList<Product>) -> Unit
-//    ) {
-//        callApiWhereFromFirebase(SHOES, TYPE, type, isLoading = false) {
-//            val products: MutableList<Product> = mutableListOf()
-//            for (document in it) {
-//                products.add(getProductInfo(document))
-//            }
-//            onFinish(products)
-//        }
-//    }
-
-//    protected fun searchProducts(
-//        productName: String,
-//        onFinish: (products: MutableList<Product>) -> Unit
-//    ) {
-//        if (productName.isEmpty()) onFinish(mutableListOf())
-//        callApiFromFireBase(SHOES) {
-//            val products: MutableList<Product> = mutableListOf()
-//            for (document in it) {
-//                getProductInfo(document).let { pro ->
-//                    if (pro.name.toLowerCase(Locale.current)
-//                            .contains(productName.toLowerCase(Locale.current))
-//                    ) {
-//                        products.add(pro)
-//                    }
-//                }
-//            }
-//            onFinish(products)
-//        }
-//    }
-
-//    internal fun isUserSigned() = auth.currentUser != null
-//
-//    @OptIn(DelicateCoroutinesApi::class)
-//    internal fun userSignOut(onFinish: () -> Unit) {
-//        resetState(true)
-//        GlobalScope.launch(Dispatchers.IO) {
-//            val logout = async { auth.signOut() }
-//            logout.onAwait
-//            resetState(false)
-//            onFinish()
-//        }
-//    }
-
     open fun <T> callApisOnThread(
         apis: List<Flow<ApiResponse<T>>>,
         onFinish: () -> Unit = {},

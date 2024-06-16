@@ -19,7 +19,6 @@ class AppNavigationViewModel @Inject constructor(
     var isSigned: Boolean by mutableStateOf(false)
         private set
 
-
     init {
         viewModelScope.launch {
             callApisOnThread(

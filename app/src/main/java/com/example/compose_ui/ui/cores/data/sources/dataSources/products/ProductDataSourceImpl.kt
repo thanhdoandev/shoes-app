@@ -13,6 +13,14 @@ class ProductDataSourceImpl @Inject constructor() : IProductDataSource {
     }
 
     override suspend fun getProduct(id: String): ApiResponse<Product> {
-       return apiServices.getProduct(id)
+        return apiServices.getProduct(id)
+    }
+
+    override suspend fun getSimilarProducts(type: String): ApiResponse<MutableList<Product>> {
+        return apiServices.getSimilarProducts(type)
+    }
+
+    override suspend fun searchProducts(search: String): ApiResponse<MutableList<Product>> {
+        return apiServices.searchProducts(search)
     }
 }

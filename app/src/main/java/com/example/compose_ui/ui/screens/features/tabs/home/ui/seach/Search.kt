@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.bases.ContainerPage
-import com.example.compose_ui.ui.components.commons.products.ProductCardRow
 import com.example.compose_ui.ui.components.commons.apps.SearchInput
+import com.example.compose_ui.ui.components.commons.products.ProductCardRow
 import com.example.compose_ui.ui.components.cores.JPColumn
 import com.example.compose_ui.ui.components.cores.JPRow
 import com.example.compose_ui.ui.components.cores.JPSpacer
@@ -73,19 +73,21 @@ fun Search(
 
 
     viewModel.run {
-        SearchScreen(
-            isLoading = isLoading.collectAsState().value,
-            shoesList = shoesList.collectAsState().value,
-            searchValue = searchValue.collectAsState().value,
-            isMicroPhoneRunning = isMicroPhoneRunning,
-            histories = getHistories(),
-            onBack = onBack,
-            onClickItem = onClickItem,
-            onClickMicroPhone = {
-                microPhoneHandle()
+        searchUiState.collectAsState().value.apply {
+            SearchScreen(
+                isLoading = isLoading,
+                shoesList = products,
+                searchValue = searchText.collectAsState().value,
+                isMicroPhoneRunning = isMicroPhoneRunning,
+                histories = histories,
+                onBack = onBack,
+                onClickItem = onClickItem,
+                onClickMicroPhone = {
+                    microPhoneHandle()
+                }
+            ) {
+                searchShoes(it)
             }
-        ) {
-            searchShoes(it)
         }
     }
 }

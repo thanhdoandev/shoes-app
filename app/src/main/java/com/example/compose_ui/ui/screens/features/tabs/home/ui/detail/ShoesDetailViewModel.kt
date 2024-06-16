@@ -36,18 +36,23 @@ class ShoesDetailViewModel @Inject constructor(
                 apis = listOf(productRepository.getProduct(id)),
                 onEachSuccess = {
                     productDetailUiState = productDetailUiState.copy(product = it)
+                    getSimilarShoes(product = it)
                 }
             )
         }
     }
 
     private fun getSimilarShoes(product: Product) {
-//        _isLoadingSimilar.value = true
-//        getSimilarProducts(product.type) {
-//            it.remove(product)
-//            _similarShoes.value = it
-//            _isLoadingSimilar.value = false
-//        }
+        productDetailUiState = productDetailUiState.copy(isLoading = true)
+        viewModelScope.launch {
+            callApisOnThread(
+                apis = listOf(productRepository.getSimilarProducts(product.type)),
+                onEachSuccess = {
+                    productDetailUiState =
+                        productDetailUiState.copy(isLoading = false, similarProducts = it)
+                }
+            )
+        }
     }
 
     internal fun likeShoes(isLike: Boolean) {

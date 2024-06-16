@@ -8,4 +8,8 @@ interface IProductRepository {
     suspend fun getProducts(): Flow<ApiResponse<MutableList<Product>>>
 
     suspend fun getProduct(id: String): Flow<ApiResponse<Product>>
+
+    suspend fun getSimilarProducts(type: String): Flow<ApiResponse<MutableList<Product>>>
+
+    suspend fun searchProducts(search: String): Flow<ApiResponse<MutableList<Product>>>
 }

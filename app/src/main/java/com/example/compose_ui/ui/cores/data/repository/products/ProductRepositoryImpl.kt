@@ -39,4 +39,16 @@ class ProductRepositoryImpl @Inject constructor(private val productDataSource: I
     override suspend fun getProduct(id: String): Flow<ApiResponse<Product>> {
         return flow { emit(productDataSource.getProduct(id)) }
     }
+
+    override suspend fun getSimilarProducts(type: String): Flow<ApiResponse<MutableList<Product>>> {
+        return flow {
+            emit(productDataSource.getSimilarProducts(type))
+        }
+    }
+
+    override suspend fun searchProducts(search: String): Flow<ApiResponse<MutableList<Product>>> {
+        return flow {
+            emit(productDataSource.searchProducts(search))
+        }
+    }
 }
