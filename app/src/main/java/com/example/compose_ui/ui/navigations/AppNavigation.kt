@@ -8,8 +8,10 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -39,9 +42,50 @@ import com.example.compose_ui.ui.screens.intro.navigations.introGraph
 import com.example.compose_ui.ui.theme.CustomComposeTheme
 import com.example.compose_ui.ui.theme.bgPage
 import com.example.compose_ui.ui.theme.primaryColor
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+@Stable
+class AppLogicState(private val navBack: NavBackStackEntry?) {
+    val isBottomTabVisible: Boolean
+        get() = isAppState(true)
+
+    val isMenuBarVisible: Boolean
+        get() = isAppState(false)
+
+    private fun isAppState(isBottom: Boolean = false): Boolean {
+        val isBottomTab: Boolean
+        val isMenuBar: Boolean
+        when (navBack?.getCurrentRoute()) {
+            getScreenName(EScreenName.HOME) -> {
+                isBottomTab = true
+                isMenuBar = true
+            }
+
+            getScreenName(EScreenName.FAVORITES),
+            getScreenName(EScreenName.ORDERS),
+            getScreenName(EScreenName.NOTIFICATIONS),
+            getScreenName(EScreenName.PROFILE) -> {
+                isBottomTab = true
+                isMenuBar = false
+            }
+
+            getScreenName(EScreenName.HISTORY),
+            getScreenName(EScreenName.DELIVERY),
+            getScreenName(EScreenName.SETTINGS) -> {
+                isBottomTab = true
+                isMenuBar = false
+            }
+
+            else -> {
+                isBottomTab = false
+                isMenuBar = false
+            }
+        }
+
+        return if (isBottom) isBottomTab else isMenuBar
+    }
+}
 
 @Composable
 fun AppNavigation(
@@ -49,7 +93,7 @@ fun AppNavigation(
     viewModel: AppNavigationViewModel = hiltViewModel(),
 ) {
     val isSigned = viewModel.isSigned
-    val isVisibleBottomTab = rememberSaveable { (mutableStateOf(false)) }
+    val isBottomTabVisible = rememberSaveable { (mutableStateOf(false)) }
     val isMenuVisible = rememberSaveable { mutableStateOf(false) }
 
     val navHostController = rememberNavController()
@@ -57,32 +101,12 @@ fun AppNavigation(
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-
     val startRoute = if (isSigned) EScreenName.HOME_ROUTE else EScreenName.AUTH_ROUTE
 
-    when (navBackStackEntry?.getCurrentRoute()) {
-        getScreenName(EScreenName.HOME) -> {
-            isVisibleBottomTab.value = true
-            isMenuVisible.value = true
-        }
-
-        getScreenName(EScreenName.FAVORITES),
-        getScreenName(EScreenName.ORDERS),
-        getScreenName(EScreenName.NOTIFICATIONS),
-        getScreenName(EScreenName.PROFILE) -> {
-            isVisibleBottomTab.value = true
-            isMenuVisible.value = false
-        }
-
-        getScreenName(EScreenName.HISTORY),
-        getScreenName(EScreenName.DELIVERY),
-        getScreenName(EScreenName.SETTINGS) -> {
-            isMenuVisible.value = true
-        }
-
-        else -> {
-            isVisibleBottomTab.value = false
-            isMenuVisible.value = false
+    LaunchedEffect(navBackStackEntry) {
+        AppLogicState(navBackStackEntry).apply {
+            isBottomTabVisible.value = this.isBottomTabVisible
+            isMenuVisible.value = this.isMenuBarVisible
         }
     }
 
@@ -128,7 +152,7 @@ fun AppNavigation(
         }, content = {
             Scaffold(
                 bottomBar = {
-                    AppBottomTabs(navController = navHostController, isVisibleBottomTab.value)
+                    AppBottomTabs(navController = navHostController, isBottomTabVisible.value)
                 }
             ) { padding ->
 

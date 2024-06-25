@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.compose_ui.R
 import com.example.compose_ui.ui.bases.ContainerPage
+import com.example.compose_ui.ui.bases.UiStateBase
 import com.example.compose_ui.ui.components.cores.JPButton
 import com.example.compose_ui.ui.components.cores.JPCard
 import com.example.compose_ui.ui.components.cores.JPInput
@@ -25,7 +26,6 @@ import com.example.compose_ui.ui.components.cores.JPSecondaryButton
 import com.example.compose_ui.ui.components.cores.JPSpacer
 import com.example.compose_ui.ui.components.cores.JPText
 import com.example.compose_ui.ui.components.cores.JPTextButton
-import com.example.compose_ui.ui.bases.UiStateBase
 import com.example.compose_ui.ui.cores.data.enums.EFieldType
 import com.example.compose_ui.ui.cores.data.model.UiState
 import com.example.compose_ui.ui.screens.iuUtils.UiStates
